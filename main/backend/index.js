@@ -1,7 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
-import userRouter from "./routers/userRouter.js"
+import userRouter from "./routers/user.router.js"
 import { dbConnect } from "./utils/dbConnect.js"
 dotenv.config()
 
