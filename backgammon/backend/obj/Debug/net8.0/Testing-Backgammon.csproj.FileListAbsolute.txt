@@ -1,0 +1,11 @@
+C:\Users\אושר\source\repos\Testing-Backgammon\bin\Debug\net8.0\Testing-Backgammon.deps.json
+C:\Users\אושר\source\repos\Testing-Backgammon\bin\Debug\net8.0\Testing-Backgammon.dll
+C:\Users\אושר\source\repos\Testing-Backgammon\bin\Debug\net8.0\Testing-Backgammon.pdb
+C:\Users\אושר\source\repos\Testing-Backgammon\obj\Debug\net8.0\Testing-Backgammon.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\אושר\source\repos\Testing-Backgammon\obj\Debug\net8.0\Testing-Backgammon.AssemblyInfoInputs.cache
+C:\Users\אושר\source\repos\Testing-Backgammon\obj\Debug\net8.0\Testing-Backgammon.AssemblyInfo.cs
+C:\Users\אושר\source\repos\Testing-Backgammon\obj\Debug\net8.0\Testing-Backgammon.csproj.CoreCompileInputs.cache
+C:\Users\אושר\source\repos\Testing-Backgammon\obj\Debug\net8.0\Testing-Backgammon.dll
+C:\Users\אושר\source\repos\Testing-Backgammon\obj\Debug\net8.0\refint\Testing-Backgammon.dll
+C:\Users\אושר\source\repos\Testing-Backgammon\obj\Debug\net8.0\Testing-Backgammon.pdb
+C:\Users\אושר\source\repos\Testing-Backgammon\obj\Debug\net8.0\ref\Testing-Backgammon.dll
