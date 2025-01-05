@@ -10,7 +10,8 @@ namespace Testing_Backgammon
         readonly Random Rnd = new Random();
         public List<int> Dices = new List<int>();
         int DiceOne, DiceTwo;
-        readonly char Black = 'b', White = 'w';
+        const char Black = 'b', White = 'w';
+
         public int EatenWhite = 0, EatenBlack = 0;
         public void InitializeBoard()
         {
@@ -52,9 +53,7 @@ namespace Testing_Backgammon
             string test = pos.Replace(pos.Last().ToString(), "");
             int pieces = int.Parse(test) - 1;
             if (pieces == 0)
-            {
                 return pieces.ToString();
-            }
             return pieces.ToString() + pos.Last();
         }
         public bool IsAvaliablePosition(int pos)
@@ -95,9 +94,33 @@ namespace Testing_Backgammon
             try
             {
                 var turn = JsonSerializer.Deserialize<Turn>(jsonTurn);
-
                 if (turn != null)
                 {
+                    int futurePos = turn.FuturePosition;
+                    int currentPos = turn.LastPosition;
+                    if (IsWinnable() && futurePos == 24)
+                    {
+                        if ((IsPossible(currentPos, futurePos) || IsPossible(currentPos, futurePos)))
+                        {
+                            Dices.Remove(futurePos - currentPos);
+                            ChangingPiece(currentPos);
+                            if(HasWon())
+                                Environment.Exit(0);
+                            return;
+                        }
+                        var HighestRollPossible = futurePos - GetLocations().Max();
+                        Dices.ForEach(item =>
+                        {
+                            if (HighestRollPossible < item)
+                            {
+                                Dices.Remove(item);
+                                ChangingPiece(currentPos);
+                                if (HasWon())
+                                    Environment.Exit(0);
+                                return;
+                            }
+                        });
+                    }
                     if (!IsThereAvailableMoves())
                     {
                         Console.WriteLine("There is no legal move, Changing Turn");
@@ -105,11 +128,15 @@ namespace Testing_Backgammon
                         ChangeTurn();
                         return;
                     }
-                    int futurePos = turn.FuturePosition;
-                    int currentPos = turn.LastPosition;
                     var piecesEaten = GetListOfEaten();
-                    if (IsEaten(futurePos, currentPos, piecesEaten) && IsntAllowed(futurePos, currentPos, piecesEaten))
+                    if (IsEaten(futurePos, currentPos, piecesEaten)) 
                         return;
+                    if (IsntAllowed(futurePos, currentPos, piecesEaten))
+                    {
+                        Console.WriteLine("You need to play the eaten piece to a good location");
+                        Console.ReadLine();
+                        return;
+                    }
                     if (!(Board[futurePos].Last() == CurrentPlayer) && NumberOfPieces(Board[futurePos]) == 1)
                     {
                         _ = CurrentPlayer == Black ? EatenWhite++ : EatenBlack++;
@@ -117,12 +144,8 @@ namespace Testing_Backgammon
                     }
                     if (AddPiece(futurePos))
                     {
-                        var lastPosition = Board[currentPos];
-                        Board[currentPos] = RemovePiece(lastPosition);
-                        if (Board[currentPos] == "0")
-                            _ = CurrentPlayer == White ? WLocations.Remove(currentPos) : BLocations.Remove(currentPos);
-                        ChangeLocations(currentPos, futurePos);
                         Dices.Remove(futurePos - currentPos);
+                        ChangingPiece(currentPos);
                     }
                 }
             }
@@ -131,6 +154,39 @@ namespace Testing_Backgammon
             }
         }
 
+        private bool HasWon()
+        {
+            if (GetLocations().Count == 0 && GetListOfEaten() == 0)
+            {
+                Console.WriteLine($"YOU WIN {(CurrentPlayer == White ? "White" : "black")}");
+                return true;
+            }
+            return false;
+
+        }
+
+        private void ChangingPiece(int currentPos)
+        {
+            var lastPosition = Board[currentPos];
+            Board[currentPos] = RemovePiece(lastPosition);
+            if (Board[currentPos] == "0")
+                _ = CurrentPlayer == White ? WLocations.Remove(currentPos) : BLocations.Remove(currentPos);
+            return;
+        }
+
+        public bool IsPossible(int pos,int result) => 
+            pos + DiceOne == result || pos + DiceTwo == result;
+        public bool IsWinnable() => CurrentPlayer switch
+        {
+            Black => BLocations.All(location => (18 <= location && location <= 23)) && EatenBlack == 0,
+            White => WLocations.All(location => (0 <= location && location <= 5)) && EatenWhite == 0,
+            _ => false
+        };
+
+        private int GetCountOfEaten() =>
+            CurrentPlayer == White ? EatenWhite : EatenBlack;
+        private List<int> GetLocations() =>
+            CurrentPlayer == White ? WLocations : BLocations;
         private bool IsntAllowed(int futurePos, int currentPos, int piecesEaten)
         {
             return piecesEaten > 0 || IsOutOfBoard(futurePos) || IsntCurrentPlayer(currentPos) || !IsCorrectRoll(currentPos, futurePos);
@@ -153,12 +209,14 @@ namespace Testing_Backgammon
         {
             if (IsntCurrentPlayer(pos))
                 return null;
-            if (DiceOne == DiceTwo)
-                return [pos + Dices[0]];
             List<int> result = [];
             foreach (var roll in Dices)
                 if (IsAvaliablePosition(pos + roll))
+                {
+                    if (DiceOne == DiceTwo)
+                        return [pos + Dices[0]];
                     result.Add(pos + roll);
+                }
             return result;
         }
 
@@ -171,7 +229,7 @@ namespace Testing_Backgammon
             IsOutOfBoard(currentPos) || Board[currentPos].Last() != CurrentPlayer;
         private static bool IsOutOfBoard(int futurePos) =>
             futurePos > 23 || futurePos < 0;
-        public void ChangeLocations(int currentPos, int futurePos)
+        public void ChangeLocations(int futurePos)
         {
             if (CurrentPlayer == White)
             {
@@ -209,14 +267,12 @@ namespace Testing_Backgammon
         }
         public bool IsEatenMovable(int pos)
         {
-            int roll = CurrentPlayer == White ? pos - 23 : pos;
-            if (!Dices.Contains(roll + 1))
-            {
+            int roll = CurrentPlayer == White ? pos - 24 : pos + 1;
+            if (!Dices.Contains(roll))
                 return false;
-            }
             if (AddPiece(pos))
             {
-                Dices.Remove(roll + 1);
+                Dices.Remove(roll);
                 _ = CurrentPlayer == White ? EatenWhite-- : EatenBlack--;
                 return true;
             }
