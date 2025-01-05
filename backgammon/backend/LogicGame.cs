@@ -3,34 +3,46 @@ namespace Testing_Backgammon
 {
     public class LogicGame
     {
-        string[] board = new string[24];
+        string[] Board = new string[24];
         char CurrentPlayer;
-        List<int> yLocations = new List<int> { 0, 18, 16, 11 };
-        List<int> xLocations = new List<int> { 23, 5, 7, 12 };
-        readonly Random rnd = new Random();
-        int diceOne, diceTwo;
+        List<int> BLocations = new List<int> { 0, 18, 16, 11 };
+        List<int> WLocations = new List<int> { 23, 5, 7, 12 };
+        readonly Random Rnd = new Random();
+        public List<int> Dices = new List<int>();
+        int DiceOne, DiceTwo;
+        readonly char Black = 'b', White = 'w';
+        public int EatenWhite = 0, EatenBlack = 0;
         public void InitializeBoard()
         {
-            for (int i = 0; i < board.Length; i++)
+            for (int i = 0; i < Board.Length; i++)
             {
-                board[i] = "0";
+                Board[i] = "0";
             }
-            board[0] = "2y";
-            board[23] = "2x";
-            board[5] = "5x";
-            board[18] = "5y";
-            board[7] = "3x";
-            board[16] = "3y";
-            board[11] = "5y";
-            board[12] = "5x";
-            Console.WriteLine($"The Current player {CurrentPlayer}");
+            Board[23] = "2w";
+            Board[0] = "2b";
+            Board[5] = "5w";
+            Board[18] = "5b";
+            Board[7] = "3w";
+            Board[16] = "3b";
+            Board[12] = "5w";
+            Board[11] = "5b";
+            DiceRolls();
+            Console.WriteLine($"The Current player {(CurrentPlayer == White ? "White" : "Black")}");
         }
         public bool AddPiece(int pos)
         {
-            if (AvaliablePosition(pos))
+            if (IsAvaliablePosition(pos))
             {
-                int number = int.Parse((board[pos][0]).ToString()) + 1;
-                board[pos] = number.ToString() + CurrentPlayer;
+                string boardPos = Board[pos].Remove(Board[pos].Length - 1);
+                int.TryParse(boardPos, out int number);
+                if (CurrentPlayer == Board[pos].Last() || Board[pos] == "0")
+                    number++;
+                Board[pos] = number.ToString() + CurrentPlayer;
+                if (CurrentPlayer != Board[pos].Last())
+                {
+                    var location = CurrentPlayer == White ? BLocations : WLocations;
+                    location.Remove(number);
+                }
                 return true;
             }
             return false;
@@ -45,37 +57,39 @@ namespace Testing_Backgammon
             }
             return pieces.ToString() + pos.Last();
         }
-        public bool AvaliablePosition(int pos)
+        public bool IsAvaliablePosition(int pos)
         {
-            if(!IsOutOfBoard(pos)) 
-                return ((board[pos].Last() == CurrentPlayer) || board[pos].First() == '1') || board[pos] == "0";
+            if (!IsOutOfBoard(pos))
+                return ((Board[pos].Last() == CurrentPlayer) || Board[pos].First() == '1') || Board[pos] == "0";
             return false;
         }
+#if DEBUG
         public void ShowBoard()
         {
-            var locations = CurrentPlayer == 'y' ? yLocations : xLocations;
+            var locations = CurrentPlayer == Black ? BLocations : WLocations;
             Console.WriteLine();
-            for (int i = 12; i < board.Length; i++)
+            for (int i = 12; i < Board.Length; i++)
             {
-                Console.Write(board[i]);
-                if (i + 1 < board.Length)
+                Console.Write(Board[i]);
+                if (i + 1 < Board.Length)
                     Console.Write(' ');
             }
             Console.WriteLine();
             Console.WriteLine();
             for (int i = 11; i >= 0; i--)
             {
-                Console.Write(board[i]);
+                Console.Write(Board[i]);
                 if (i - 1 >= 0)
                 {
                     Console.Write(' ');
                 }
             }
             Console.WriteLine();
-            Console.WriteLine(CurrentPlayer == 'y' ? "Y Locations:" : "X Locations");
-            locations = CurrentPlayer == 'x' ? [.. locations.OrderDescending()] : [.. locations.Order()];
+            Console.WriteLine(CurrentPlayer == Black ? "Black Locations:" : "White Locations");
+            locations = CurrentPlayer == White ? [.. locations.OrderDescending()] : [.. locations.Order()];
             locations.ForEach(item => Console.Write($"{item} "));
         }
+#endif
         public void DoMove(string jsonTurn)
         {
             try
@@ -84,17 +98,31 @@ namespace Testing_Backgammon
 
                 if (turn != null)
                 {
+                    if (!IsThereAvailableMoves())
+                    {
+                        Console.WriteLine("There is no legal move, Changing Turn");
+                        Console.ReadLine();
+                        ChangeTurn();
+                        return;
+                    }
                     int futurePos = turn.FuturePosition;
                     int currentPos = turn.LastPosition;
-                    if (IsOutOfBoard(futurePos) || IsntCurrentPlayer(currentPos) || !CorrectRoll(futurePos, currentPos))
+                    var piecesEaten = GetListOfEaten();
+                    if (IsEaten(futurePos, currentPos, piecesEaten) && IsntAllowed(futurePos, currentPos, piecesEaten))
                         return;
-                    if (AvaliablePosition(currentPos) && AddPiece(futurePos))
+                    if (!(Board[futurePos].Last() == CurrentPlayer) && NumberOfPieces(Board[futurePos]) == 1)
                     {
-                        var lastPosition = board[currentPos];
-                        board[currentPos] = RemovePiece(lastPosition);
-                        if (board[turn.LastPosition] == "0")
-                            _ = CurrentPlayer == 'x' ? xLocations.Remove(currentPos) : yLocations.Remove(currentPos);
+                        _ = CurrentPlayer == Black ? EatenWhite++ : EatenBlack++;
+                        _ = CurrentPlayer == Black ? WLocations.Remove(futurePos) : BLocations.Remove(futurePos);
+                    }
+                    if (AddPiece(futurePos))
+                    {
+                        var lastPosition = Board[currentPos];
+                        Board[currentPos] = RemovePiece(lastPosition);
+                        if (Board[currentPos] == "0")
+                            _ = CurrentPlayer == White ? WLocations.Remove(currentPos) : BLocations.Remove(currentPos);
                         ChangeLocations(currentPos, futurePos);
+                        Dices.Remove(futurePos - currentPos);
                     }
                 }
             }
@@ -102,74 +130,107 @@ namespace Testing_Backgammon
             {
             }
         }
+
+        private bool IsntAllowed(int futurePos, int currentPos, int piecesEaten)
+        {
+            return piecesEaten > 0 || IsOutOfBoard(futurePos) || IsntCurrentPlayer(currentPos) || !IsCorrectRoll(currentPos, futurePos);
+        }
+
+        private bool IsEaten(int futurePos, int currentPos, int piecesEaten)
+        {
+            return currentPos == -1 && piecesEaten > 0 && IsEatenMovable(futurePos);
+        }
+
+        public int NumberOfPieces(string pos)
+        {
+            if (pos == null)
+                return 0;
+            if (int.TryParse(pos.Replace(pos.Last(), ' '), out int result))
+                return result;
+            return 0;
+        }
         public List<int>? AvaliableMoves(int pos)
         {
             if (IsntCurrentPlayer(pos))
-                return default;
+                return null;
+            if (DiceOne == DiceTwo)
+                return [pos + Dices[0]];
             List<int> result = [];
-            if (AvaliablePosition(pos + diceOne))
-                result.Add(pos + diceOne);
-            if (AvaliablePosition(pos + diceTwo))
-                result.Add(pos + diceTwo);
-            return result;     
-        }
-        private bool IsntCurrentPlayer(int currentPos)
-        {
-            return board[currentPos].Last() != CurrentPlayer;
+            foreach (var roll in Dices)
+                if (IsAvaliablePosition(pos + roll))
+                    result.Add(pos + roll);
+            return result;
         }
 
-        private static bool IsOutOfBoard(int futurePos)
+        private int GetListOfEaten()
         {
-            return futurePos > 23 || futurePos < 0;
+            return CurrentPlayer == White ? EatenWhite : EatenBlack;
         }
 
+        private bool IsntCurrentPlayer(int currentPos) =>
+            IsOutOfBoard(currentPos) || Board[currentPos].Last() != CurrentPlayer;
+        private static bool IsOutOfBoard(int futurePos) =>
+            futurePos > 23 || futurePos < 0;
         public void ChangeLocations(int currentPos, int futurePos)
         {
-            if (CurrentPlayer == 'x')
+            if (CurrentPlayer == White)
             {
-                if (!xLocations.Contains(futurePos))
-                    xLocations.Add(futurePos);
+                if (!WLocations.Contains(futurePos))
+                    WLocations.Add(futurePos);
             }
-            else if (CurrentPlayer == 'y')
+            else
             {
-                if (!yLocations.Contains(futurePos))
-                    yLocations.Add(futurePos);
+                if (!BLocations.Contains(futurePos))
+                    BLocations.Add(futurePos);
             }
         }
-        public bool CorrectRoll(int future, int current) => (current + diceOne == future) || (current + diceTwo == future);
-        public List<int> DiceRolls()
+        public bool IsCorrectRoll(int current, int future)
         {
-            diceOne =  rnd.Next(1, 7);
-            diceTwo =  rnd.Next(1, 7);
-            return diceOne == diceTwo ? [diceOne, diceTwo, diceOne, diceTwo] : [diceOne, diceTwo];
-        }
-        public bool IsThereAvailableMoves(bool eatenPiece = false)
-        {
-            //TODO - eatenPiece Logic
-            //if (eatenPiece) - TODO
-            //{
-            //    return AddPiece(diceOne, player) || AddPiece(diceTwo, player);
-            //}
-            var SelectedList = CurrentPlayer == 'x' ? xLocations : yLocations;
-            foreach (var pos in SelectedList)
-            {
-                if (AvaliablePosition(pos + diceOne) || AvaliablePosition(pos + diceTwo))
+            foreach (var roll in Dices)
+                if (current + roll == future)
                     return true;
+            return false;
+        }
+        public void DiceRolls()
+        {
+            if (CurrentPlayer == default)
+                CurrentPlayer = Rnd.Next(1, 6) > Rnd.Next(1, 6) ? Black : White;
+            DiceOne = CurrentPlayer == White ? Rnd.Next(-6, 0) : Rnd.Next(1, 7);
+            DiceTwo = CurrentPlayer == White ? Rnd.Next(-6, 0) : Rnd.Next(1, 7);
+            Dices = DiceOne == DiceTwo ? [DiceOne, DiceTwo, DiceOne, DiceTwo] : [DiceOne, DiceTwo];
+        }
+        public void ChangeTurn()
+        {
+            CurrentPlayer = CurrentPlayer == Black ? White : Black;
+            DiceRolls();
+#if DEBUG
+            Console.WriteLine($"Next Turn: {CurrentPlayer} Rolled ({Math.Abs(DiceOne)},{Math.Abs(DiceTwo)})");
+#endif
+        }
+        public bool IsEatenMovable(int pos)
+        {
+            int roll = CurrentPlayer == White ? pos - 23 : pos;
+            if (!Dices.Contains(roll + 1))
+            {
+                return false;
+            }
+            if (AddPiece(pos))
+            {
+                Dices.Remove(roll + 1);
+                _ = CurrentPlayer == White ? EatenWhite-- : EatenBlack--;
+                return true;
             }
             return false;
         }
-        public List<int> WhoStarts() 
+        public bool IsThereAvailableMoves()
         {
-            List<int> list = new List<int>();
-            while (diceTwo == diceOne)
-                list = DiceRolls();
-            CurrentPlayer = diceTwo > diceOne ? 'x' : 'y';
-            if (CurrentPlayer == 'x')
+            var SelectedList = CurrentPlayer == White ? WLocations : BLocations;
+            foreach (var pos in SelectedList)
             {
-                diceOne = int.IsPositive(diceOne) ? diceOne * -1 : diceOne;
-                diceTwo = int.IsPositive(diceTwo) ? diceTwo * -1 : diceTwo;
+                if (IsAvaliablePosition(pos + DiceOne) || IsAvaliablePosition(pos + DiceTwo))
+                    return true;
             }
-            return list;
+            return false;
         }
     }
 }
