@@ -1,30 +1,112 @@
 import { useState } from 'react'
 import { Chessboard } from 'react-chessboard'
-import { Move, Chess, Square, Piece } from "chess.js"
-import { CustomSquareStyles } from 'react-chessboard/dist/chessboard/types'
+import { Chess, Square } from "chess.js"
+import { CustomSquareStyles, Piece, PromotionPieceOption } from 'react-chessboard/dist/chessboard/types'
 
 const Game = () => {
-    const [game, setGame] = useState<Chess>(new Chess())
-    const [moveFrom, setMoveFrom] = useState<Square|null>(null)
-    const [moveTo, setMoveTo] = useState<Square|null>(null)
-    const [optionSquares, setOptionSquares] = useState<CustomSquareStyles | undefined>({})
+  const [game, setGame] = useState<Chess>(new Chess())
+  const [moveFrom, setMoveFrom] = useState<Square|null>(null)
+  const [moveTo, setMoveTo] = useState<Square|null>(null)
+  const [optionSquares, setOptionSquares] = useState<CustomSquareStyles | undefined>({})
+  const [showPromotionDialog, setShowPromotionDialog] = useState(false)
 
-    const safeGameMutate = (modify: Function) => {
-      setGame(g => {
-        const gameCopy = new Chess(g.fen());
-        modify(gameCopy)
-        return gameCopy
-      })
+  // const safeGameMutate = (modify: Function) => {
+  //   setGame(g => {
+  //     const gameCopy = new Chess(g.fen());
+  //     modify(gameCopy)
+  //     return gameCopy
+  //   })
+  // }
+
+  const safeMove = (from?: Square | null, to?: Square | null, promotion: string = "q") => {
+    const gameCopy: Chess = new Chess(game.fen())
+
+    if (!from || !to) return null
+    const move = gameCopy.move({from,to, promotion})
+    
+    if (!move) return null
+    return {gameCopy: gameCopy, move: move}
+  }
+
+  const resetStates = (resetOptionSquares = true) => {
+    setMoveFrom(null)
+    setMoveTo(null)
+    setShowPromotionDialog(false)
+    if (resetOptionSquares) setOptionSquares({})
+  }
+
+  const checkPromotion = (from: Square, to: Square) => {
+    const moves = game.moves({square: from ,verbose: true})
+    const foundMove = moves.find(m => m.from === from && m.to === to)
+    if (foundMove && foundMove!.piece === "p" && 
+      (foundMove!.color === "w" && to[1] === "8" || foundMove!.color === "b"  && to[1] === "8")) {
+      return true
+    }
+    return false
+  }
+
+  // TODO go over this function
+  const onSquareClick = (square: Square) => {
+    // setRightClickedSquares({});
+
+    // from square
+    if (!moveFrom) {
+      const hasMoveOptions = getMoveOptions(square);
+      if (hasMoveOptions) setMoveFrom(square);
+      return
     }
 
-    const getMoveOptions = (square: Square) => {
+    // to square
+    if (!moveTo) {
+    // check if valid move before showing dialog
+    const moves = game.moves({
+      square: moveFrom,
+      verbose: true
+    })
+    const foundMove = moves.find(m => m.from === moveFrom && m.to === square)
+    // not a valid move
+    if (!foundMove) {
+      // check if clicked on new piece
+      const hasMoveOptions = getMoveOptions(square)
+      // if new piece, setMoveFrom, otherwise clear moveFrom
+      setMoveFrom(hasMoveOptions ? square : null)
+      return
+    }
+
+    // valid move
+    setMoveTo(square)
+
+    // if promotion move
+    if (foundMove.color === "w" && foundMove.piece === "p" && square[1] === "8" || foundMove.color === "b" && foundMove.piece === "p" && square[1] === "1") {
+      setShowPromotionDialog(true)
+      return
+    }
+
+    // is normal move
+    const result = safeMove(moveFrom, square)
+
+    // if invalid, setMoveFrom and getMoveOptions
+    if (!result) {
+      const hasMoveOptions = getMoveOptions(square)
+      if (hasMoveOptions) setMoveFrom(square)
+      return
+    }
+    const {gameCopy} = result
+    resetStates()
+    setGame(gameCopy)
+    return
+    }
+  }
+
+  const getMoveOptions = (square: Square) => {
       const moves = game.moves({square, verbose: true})
 
       if (moves.length === 0) {
         setOptionSquares({})
         return false
       }
-
+      
+      // markings for available moves
       const newSquares: CustomSquareStyles | undefined = {}
       moves.map(move => {
         newSquares[move.to] = {
@@ -39,115 +121,47 @@ const Game = () => {
 
       setOptionSquares(newSquares)
       return true
-    }
-
-    const onSquareClick = (square: Square) => {
-      // setRightClickedSquares({});
-  
-      // from square
-      if (!moveFrom) {
-        const hasMoveOptions = getMoveOptions(square);
-        if (hasMoveOptions) setMoveFrom(square);
-        return
-      }
-
-      // to square
-      if (!moveTo) {
-      // check if valid move before showing dialog
-      const moves = game.moves({
-        square: moveFrom,
-        verbose: true
-      })
-      const foundMove = moves.find(m => m.from === moveFrom && m.to === square)
-      // not a valid move
-      if (!foundMove) {
-        // check if clicked on new piece
-        const hasMoveOptions = getMoveOptions(square)
-        // if new piece, setMoveFrom, otherwise clear moveFrom
-        setMoveFrom(hasMoveOptions ? square : null)
-        return
-      }
-
-      // valid move
-      setMoveTo(square);
-
-      // if promotion move
-      if (foundMove.color === "w" && foundMove.piece === "p" && square[1] === "8" || foundMove.color === "b" && foundMove.piece === "p" && square[1] === "1") {
-        // setShowPromotionDialog(true);
-        return;
-      }
-
-      // is normal move
-      const gameCopy: Chess = new Chess(game.fen())
-      const move = gameCopy.move({
-        from: moveFrom,
-        to: square,
-        promotion: "q"
-      });
-
-      // if invalid, setMoveFrom and getMoveOptions
-      if (move === null) {
-        const hasMoveOptions = getMoveOptions(square);
-        if (hasMoveOptions) setMoveFrom(square);
-        return;
-      }
-      setGame(gameCopy);
-      setMoveFrom(null);
-      setMoveTo(null);
-      setOptionSquares({});
-      return;
-    }
   }
 
-  //TODO: make a function for making a move and replace all the duplicate code
-
-  const onPromotionPieceSelect = (piece: Piece) => {
+  const onPieceDrop = (sourceSquare: Square, targetSquare: Square, piece: Piece) => {
+    setMoveFrom(sourceSquare)
+    setMoveTo(targetSquare)  
+    
+    const result = safeMove(sourceSquare, targetSquare, piece[1].toLowerCase())
+    
+    if (result){
+      console.log("moved")
+      const {gameCopy} = result
+      checkPromotion(sourceSquare, targetSquare)
+      setGame(gameCopy)
+      return true
+    }
+    return false
+  }
+  // TODO try to fix with onDragEnd
+  const onPromotionPieceSelect = (piece?: PromotionPieceOption, promoteFromSquare?: Square, promoteToSquare?: Square ) => {
     // if no piece passed then user has cancelled dialog, don't make move and reset
     if (piece) {
-      const gameCopy = {
-        ...game
-      };
-      gameCopy.move({
-        from: moveFrom,
-        to: moveTo,
-        promotion: piece[1].toLowerCase() ?? "q"
-      });
-      setGame(gameCopy);
-      setTimeout(makeRandomMove, 300);
+      if (promoteFromSquare === null || promoteToSquare === null) 
+        return false
+      
+      const result = safeMove(promoteFromSquare, promoteToSquare, piece[1].toLowerCase())
+      if (!result)
+        return false
+
+      setGame(result.gameCopy)
     }
-    setMoveFrom("");
-    setMoveTo(null);
-    setShowPromotionDialog(false);
-    setOptionSquares({});
-    return true;
+    resetStates()
+    return true
   }
-
-    // const makeAMove = (move: Move) => {
-    //     const gameCopy: Chess = new Chess(game.fen());
-    //     const result = gameCopy.move(move);
-    //     if (result) setGame(gameCopy);
-    //     return result; // null if the move was illegal, the move object if the move was legal
-    // }
-
-    // const onPieceDrop = (sourceSquare: Square, targetSquare: Square, piece: Piece) => {
-    //     const move = makeAMove({
-    //       from: sourceSquare,
-    //       to: targetSquare,
-    //       piece: piece.type,
-    //       color: piece.color,
-          
-
-    //     });
-    
-    //     // illegal move
-    //     return move ? true : false
-    // }
-
+  
   return (
-    <div>
-        <Chessboard position={game.fen()} customSquareStyles={{...optionSquares}} onSquareClick={onSquareClick}
-        // onPieceDrop={onPieceDrop}
-        />
+    <div className='place-content-center'>
+        <Chessboard boardWidth={800} position={game.fen()} animationDuration={200} 
+         customSquareStyles={{...optionSquares}} onSquareClick={onSquareClick}
+         onPromotionPieceSelect={onPromotionPieceSelect} onPieceDrop={onPieceDrop}
+         showPromotionDialog={showPromotionDialog} promotionToSquare={moveTo}
+         />
     </div>
   )
 }
