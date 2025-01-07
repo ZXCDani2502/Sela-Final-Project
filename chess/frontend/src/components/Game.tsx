@@ -5,6 +5,7 @@ import { CustomSquareStyles, Piece, PromotionPieceOption } from 'react-chessboar
 
 const Game = () => {
   const [game, setGame] = useState<Chess>(new Chess())
+  const [gameHistory] = useState<Chess>(new Chess())
   const [moveFrom, setMoveFrom] = useState<Square|null>(null)
   const [moveTo, setMoveTo] = useState<Square|null>(null)
   const [optionSquares, setOptionSquares] = useState<CustomSquareStyles | undefined>({})
@@ -23,7 +24,8 @@ const Game = () => {
     const gameCopy: Chess = new Chess(game.fen())
 
     if (!from || !to) return null
-    const move = gameCopy.move({from,to, promotion})
+    const move = gameCopy.move({from,to,promotion})
+    gameHistory.move({from,to,promotion})
     
     if (!move) return null
     return {gameCopy: gameCopy, move: move}
@@ -36,7 +38,6 @@ const Game = () => {
     if (resetOptionSquares) setOptionSquares({})
   }
 
-  // TODO go over this function
   const onSquareClick = (square: Square) => {
     // setRightClickedSquares({});
     // select first square
@@ -121,6 +122,7 @@ const Game = () => {
       console.log("moved")
       const {gameCopy} = result
       setGame(gameCopy)
+      resetStates()
       return true
     }
     return false
@@ -135,7 +137,8 @@ const Game = () => {
       const result = safeMove(promoteFromSquare, promoteToSquare, piece[1].toLowerCase())
       if (!result)
         return false
-
+      
+      console.log(`promoted to ${piece}`)
       setGame(result.gameCopy)
     }
     resetStates()
