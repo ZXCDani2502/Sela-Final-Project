@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { Chessboard } from 'react-chessboard'
 import { Chess, Square } from "chess.js"
-import { CustomSquareStyles, Piece, PromotionPieceOption } from 'react-chessboard/dist/chessboard/types'
+import { CustomSquareStyles, PromotionPieceOption } from 'react-chessboard/dist/chessboard/types'
 
 const Game = () => {
   const [game, setGame] = useState<Chess>(new Chess())
-  const [gameHistory] = useState<Chess>(new Chess())
   const [moveFrom, setMoveFrom] = useState<Square|null>(null)
   const [moveTo, setMoveTo] = useState<Square|null>(null)
   const [optionSquares, setOptionSquares] = useState<CustomSquareStyles | undefined>({})
@@ -14,20 +13,21 @@ const Game = () => {
   // for external actions
   const safeGameMutate = (modify: Function) => {
     setGame(g => {
-      const gameCopy = new Chess(g.fen());
+      const gameCopy = new Chess(g.fen())
       modify(gameCopy)
       return gameCopy
     })
   }
 
-  const safeMove = (from?: Square | null, to?: Square | null, promotion: string = "q") => {
+  const safeMove = (from?: Square | null, to?: Square | null, promotion?: string) => {
     const gameCopy: Chess = new Chess(game.fen())
 
     if (!from || !to) return null
     const move = gameCopy.move({from,to,promotion})
-    gameHistory.move({from,to,promotion})
     
     if (!move) return null
+
+    console.log(move.san)
     return {gameCopy: gameCopy, move: move}
   }
 
@@ -39,7 +39,8 @@ const Game = () => {
   }
 
   const onSquareClick = (square: Square) => {
-    // setRightClickedSquares({});
+    // setRightClickedSquares({})
+
     // select first square
     if (!moveFrom) {
       const hasMoveOptions = getMoveOptions(square);
@@ -65,15 +66,16 @@ const Game = () => {
     setMoveTo(square)
 
     // if promotion move
-    if (foundMove.color === "w" && foundMove.piece === "p" && square[1] === "8" || foundMove.color === "b" && foundMove.piece === "p" && square[1] === "1") {
+    const canPromote = onPromotionCheck(moveFrom, square)
+
+    if(canPromote) {
       setShowPromotionDialog(true)
-      return
     }
 
     // is normal move
     const result = safeMove(moveFrom, square)
 
-    // if invalid, setMoveFrom and getMoveOptions
+    // if invalid, reset move options to the newly clicked piece
     if (!result) {
       const hasMoveOptions = getMoveOptions(square)
       if (hasMoveOptions) setMoveFrom(square)
@@ -88,7 +90,6 @@ const Game = () => {
 
   const getMoveOptions = (square: Square) => {
     const moves = game.moves({square, verbose: true})
-    console.log(`square:${square}, moves:${moves}`)
 
       if (moves.length === 0) {
         setOptionSquares({})
@@ -112,14 +113,13 @@ const Game = () => {
       return true
   }
 
-  const onPieceDrop = (sourceSquare: Square, targetSquare: Square, piece: Piece) => {
+  const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
     setMoveFrom(sourceSquare)
     setMoveTo(targetSquare)
 
-    const result = safeMove(sourceSquare, targetSquare, piece[1].toLowerCase())
+    const result = safeMove(sourceSquare, targetSquare)
     
     if (result){
-      console.log("moved")
       const {gameCopy} = result
       setGame(gameCopy)
       resetStates()
@@ -134,6 +134,8 @@ const Game = () => {
       if (promoteFromSquare === null || promoteToSquare === null) 
         return false
       
+      if(promoteFromSquare === undefined) promoteFromSquare = moveFrom! //helper for promotion from onSquareClick
+
       const result = safeMove(promoteFromSquare, promoteToSquare, piece[1].toLowerCase())
       if (!result)
         return false
@@ -167,6 +169,7 @@ const Game = () => {
 
       <button className='btn' onClick={() => {
         safeGameMutate((game: Chess) => {
+          console.log(game.history({verbose: true}))
           game.reset()
         })
         resetStates()

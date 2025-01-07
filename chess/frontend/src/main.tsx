@@ -1,17 +1,17 @@
 import './index.css'
 import axios from 'axios'
-import { StrictMode } from 'react'
+// import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes} from 'react-router'
 import HomePage from './pages/HomePage'
 
 axios.defaults.baseURL = 'http://localhost:8080/'
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<HomePage/>}></Route>
       </Routes>
     </BrowserRouter>
-  </StrictMode>,
+  // </StrictMode>
 )
