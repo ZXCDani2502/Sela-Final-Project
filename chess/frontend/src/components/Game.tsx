@@ -11,13 +11,14 @@ const Game = () => {
   const [showPromotionDialog, setShowPromotionDialog] = useState(false)
 
   // for external actions
-  const safeGameMutate = (modify: Function) => {
-    setGame(g => {
-      const gameCopy = new Chess(g.fen())
-      modify(gameCopy)
-      return gameCopy
-    })
-  }
+  
+  // const safeGameMutate = (modify: Function) => {
+  //   setGame(g => {
+  //     const gameCopy = new Chess(g.fen())
+  //     modify(gameCopy)
+  //     return gameCopy
+  //   })
+  // }
 
   const safeMove = (from?: Square | null, to?: Square | null, promotion?: string) => {
     const gameCopy: Chess = new Chess(game.fen())
@@ -158,7 +159,7 @@ const Game = () => {
   }
 
   return (
-    <div className='place-content-center'>
+    <div className=''>
       <Chessboard boardWidth={600} position={game.fen()} animationDuration={200} 
         customSquareStyles={{...optionSquares}} onSquareClick={onSquareClick}
         onPromotionPieceSelect={onPromotionPieceSelect} onPieceDrop={onPieceDrop}
@@ -166,7 +167,7 @@ const Game = () => {
       //  onPieceClick={}
       onPromotionCheck={onPromotionCheck}
         />
-
+      {/*
       <button className='btn' onClick={() => {
         safeGameMutate((game: Chess) => {
           console.log(game.history({verbose: true}))
@@ -186,7 +187,7 @@ const Game = () => {
       }}>
         Undo
       </button>
-        
+      */}
     </div>
   )
 }

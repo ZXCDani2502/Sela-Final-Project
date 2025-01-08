@@ -1,9 +1,11 @@
-import Game from '../components/Game.tsx'
+const match = (usernames: string) => {
+  
+}
 
 const HomePage = () => {
   return (
     <div>
-      <Game/>
+      <button className="btn btn-ghost" onClick={match(username)}>Find Match</button>
     </div>
   )
 }
