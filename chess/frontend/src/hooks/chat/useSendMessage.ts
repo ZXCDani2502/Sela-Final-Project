@@ -1,19 +1,19 @@
-import { useState } from "react"
-import useChat from "../store/useChat.ts"
-import toast from "react-hot-toast"
+import { useState } from 'react'
+import useChat from '../../store/useChat.ts'
+import toast from 'react-hot-toast'
 
 const useSendMessage = () => {
     const [loading, setLoading] = useState(false)
-    const { messages, setMessages, selectedChat } = useChat()
+    const { messages, setMessages, currentChat: selectedChat } = useChat()
     //TODO get selected chat
 
     const sendMessage = async (message: string) => {
         setLoading(true)
         try {
             const res = await fetch(`http://localhost:6600/api/message/send/${selectedChat?._id}`, {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ message }),
             })

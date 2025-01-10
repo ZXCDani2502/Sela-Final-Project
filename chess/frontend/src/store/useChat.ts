@@ -20,16 +20,16 @@ export type Chat = {
 }
 
 interface ChatState {
-    selectedChat: Chat | null
-    setSelectedChat: (selectedChat: Chat) => void
+    currentChat: Chat | null
+    setCurrentChat: (currentChat: Chat) => void
     messages: Array<Message>
     setMessages: (messages: Array<Message>) => void
 }
 
 const useChat = create<ChatState>((set) => ({
     //TODO find where to create the chat
-    selectedChat: null,
-    setSelectedChat: (selectedChat) => set({ selectedChat }),
+    currentChat: null,
+    setCurrentChat: (currentChat) => set({ currentChat }),
     messages: [],
     setMessages: (messages) => set({ messages }),
 }))

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import useChat from "../store/useChat"
-import toast from "react-hot-toast"
+import { useEffect, useState } from 'react'
+import useChat from '../../store/useChat'
+import toast from 'react-hot-toast'
 
 const useGetMessages = () => {
     const [loading, setLoading] = useState(false)
-    const { messages, setMessages, selectedChat } = useChat()
+    const { messages, setMessages, currentChat: selectedChat } = useChat()
 
     useEffect(() => {
         const getMessages = async () => {

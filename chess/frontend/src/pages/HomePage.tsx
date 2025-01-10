@@ -1,14 +1,9 @@
-import ChatContainer from "../components/chat/ChatContainer"
-
 // const match = (usernames: string) => {}
 
 const HomePage = () => {
     return (
         <div className='p-4 h-screen flex items-center justify-center'>
-            <ChatContainer />
-            {/* <button className='btn btn-ghost' onClick={match(username)}>
-                Find Match
-            </button> */}
+            <button className='btn btn-ghost' /*onClick={match(username)}*/>Find Match</button>
         </div>
     )
 }

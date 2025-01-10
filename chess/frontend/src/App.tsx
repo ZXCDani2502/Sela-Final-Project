@@ -1,15 +1,17 @@
 import Home from './pages/HomePage'
+import Game from './pages/GamePage'
 import { Toaster } from 'react-hot-toast'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { useAuthContext } from './context/AuthContext'
-import './App.css'
+import redirectToLogin from './utils/redirectToLogin'
 
 function App() {
     const { authUser } = useAuthContext()
     return (
         <div className='p-4 h-screen flex items-center justify-center'>
             <Routes>
-                <Route path='/' element={authUser ? <Home /> : <Navigate to={'/login'} />} />
+                <Route path='/' element={<Home />} />
+                <Route path='/game' element={authUser ? <Game /> : redirectToLogin(window.location.href)} />
             </Routes>
             <Toaster />
         </div>

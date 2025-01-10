@@ -2,8 +2,8 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import userRouter from './routers/user.router.js'
-import authRouter from './routers/auth.router.js'
 import messageRouter from './routers/message.router.js'
+import chessRouter from './routers/chess.router.js'
 import { dbConnect } from './utils/dbConnect.js'
 import cookieParser from 'cookie-parser'
 import { app, server } from './socket/socket.js'
@@ -18,8 +18,8 @@ app.use(cookieParser)
 
 //Routing
 app.use('/api/user/', userRouter)
-app.use('/api/auth/', authRouter)
 app.use('/api/message/', messageRouter)
+app.use('/api/chess/', chessRouter)
 
 //DB Connection + Start Server
 try {

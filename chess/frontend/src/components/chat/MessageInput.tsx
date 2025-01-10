@@ -1,16 +1,16 @@
-import { SendHorizontal } from "lucide-react"
-import { FormEvent, useState } from "react"
-import useSendMessage from "../../hooks/useSendMessage"
+import { SendHorizontal } from 'lucide-react'
+import { FormEvent, useState } from 'react'
+import useSendMessage from '../../hooks/chat/useSendMessage'
 
 const MessageInput = () => {
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState('')
     const { loading, sendMessage } = useSendMessage()
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!message) return
         await sendMessage(message)
-        setMessage("")
+        setMessage('')
     }
 
     return (

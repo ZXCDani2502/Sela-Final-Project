@@ -1,7 +1,9 @@
-import { useState } from "react"
-import { Chessboard } from "react-chessboard"
-import { Chess, Square } from "chess.js"
-import { CustomSquareStyles, PromotionPieceOption } from "react-chessboard/dist/chessboard/types"
+import { useState } from 'react'
+import { Chessboard } from 'react-chessboard'
+import { Chess, Square } from 'chess.js'
+import { CustomSquareStyles, PromotionPieceOption } from 'react-chessboard/dist/chessboard/types'
+import { useSocketContext } from '../context/SocketContext'
+import { useAuthContext } from '../context/AuthContext'
 
 const Game = () => {
     const [game, setGame] = useState<Chess>(new Chess())
@@ -9,6 +11,8 @@ const Game = () => {
     const [moveTo, setMoveTo] = useState<Square | null>(null)
     const [optionSquares, setOptionSquares] = useState<CustomSquareStyles | undefined>({})
     const [showPromotionDialog, setShowPromotionDialog] = useState(false)
+    const { socket } = useSocketContext()
+    const { authUser } = useAuthContext()
 
     //OPTIONAL hot toast for invalid moves
 
@@ -69,9 +73,7 @@ const Game = () => {
             setMoveTo(square)
 
             // if promotion move
-            const canPromote = onPromotionCheck(moveFrom, square)
-
-            if (canPromote) {
+            if (onPromotionCheck(moveFrom, square)) {
                 setShowPromotionDialog(true)
             }
 
@@ -84,9 +86,11 @@ const Game = () => {
                 if (hasMoveOptions) setMoveFrom(square)
                 return
             }
-            const { gameCopy } = result
-            resetStates()
+            const { gameCopy, move } = result
+
+            socket?.emit('move', { move: move })
             setGame(gameCopy)
+            resetStates()
             return
         }
     }
@@ -105,14 +109,14 @@ const Game = () => {
             newSquares[move.to] = {
                 background:
                     game.get(move.to) && game.get(move.to).color !== game.get(square).color
-                        ? "radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)"
-                        : "radial-gradient(circle, rgba(0,0,0,.1) 25%, transparent 25%)",
-                borderRadius: "50%",
+                        ? 'radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)'
+                        : 'radial-gradient(circle, rgba(0,0,0,.1) 25%, transparent 25%)',
+                borderRadius: '50%',
             }
             return move
         })
         newSquares[square] = {
-            background: "rgba(255, 255, 0, 0.4)",
+            background: 'rgba(255, 255, 0, 0.4)',
         }
 
         setOptionSquares(newSquares)
@@ -154,7 +158,7 @@ const Game = () => {
     const onPromotionCheck = (from: Square, to: Square) => {
         const moves = game.moves({ square: from, verbose: true })
         const foundMove = moves.find((m) => m.from === from && m.to === to)
-        if (foundMove && foundMove!.piece === "p" && ((foundMove!.color === "w" && to[1] === "8") || (foundMove!.color === "b" && to[1] === "1"))) {
+        if (foundMove && foundMove!.piece === 'p' && ((foundMove!.color === 'w' && to[1] === '8') || (foundMove!.color === 'b' && to[1] === '1'))) {
             return true
         }
         return false

@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react'
+import axios from 'axios'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 type AuthUserType = { id: string } | null
 
@@ -17,7 +18,22 @@ export const useAuthContext = () => {
 }
 
 export const AuthContextProvider = ({ children }: { children: React.ReactElement }) => {
-    const [authUser, setAuthUser] = useState<AuthUserType>(JSON.parse(localStorage.getItem('chat-user')!) || null) //TODO change to work with our auth system
+    const [authUser, setAuthUser] = useState<AuthUserType>(null) //TODO change to work with our auth system
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/api/auth/check')
+            .then((res) => {
+                if (res.data.user) {
+                    setAuthUser(res.data.user)
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [authUser])
+
+    console.log('authUser', authUser)
 
     return <AuthContext.Provider value={{ authUser, setAuthUser }}>{children}</AuthContext.Provider>
 }
