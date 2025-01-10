@@ -1,17 +1,21 @@
 import './index.css'
 import axios from 'axios'
-// import { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes} from 'react-router'
-import HomePage from './pages/HomePage'
+import { BrowserRouter } from 'react-router-dom'
+import { AuthContextProvider } from './context/AuthContext.tsx'
+import { SocketContextProvider } from './context/SocketContext.tsx'
+import App from './App.tsx'
 
-axios.defaults.baseURL = 'http://localhost:8080/'
+axios.defaults.baseURL = 'http://localhost:6600/'
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<HomePage/>}></Route>
-      </Routes>
-    </BrowserRouter>
-  // </StrictMode>
+    <StrictMode>
+        <BrowserRouter>
+            <AuthContextProvider>
+                <SocketContextProvider>
+                    <App />
+                </SocketContextProvider>
+            </AuthContextProvider>
+        </BrowserRouter>
+    </StrictMode>
 )
