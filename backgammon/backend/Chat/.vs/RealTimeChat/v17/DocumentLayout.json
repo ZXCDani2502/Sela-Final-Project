@@ -1,0 +1,144 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|c:\\users\\\u05D0\u05D5\u05E9\u05E8\\downloads\\realtimechat\\realtimechat\\backend\\realtimechat\\models\\userconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|solutionrelative:realtimechat\\models\\userconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|c:\\users\\\u05D0\u05D5\u05E9\u05E8\\downloads\\realtimechat\\realtimechat\\backend\\realtimechat\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|solutionrelative:realtimechat\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|c:\\users\\\u05D0\u05D5\u05E9\u05E8\\downloads\\realtimechat\\realtimechat\\backend\\realtimechat\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|solutionrelative:realtimechat\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|c:\\users\\\u05D0\u05D5\u05E9\u05E8\\downloads\\realtimechat\\realtimechat\\backend\\realtimechat\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|solutionrelative:realtimechat\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|c:\\users\\\u05D0\u05D5\u05E9\u05E8\\downloads\\realtimechat\\realtimechat\\backend\\realtimechat\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|solutionrelative:realtimechat\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|c:\\users\\\u05D0\u05D5\u05E9\u05E8\\downloads\\realtimechat\\realtimechat\\backend\\realtimechat\\models\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|solutionrelative:realtimechat\\models\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|c:\\users\\\u05D0\u05D5\u05E9\u05E8\\downloads\\realtimechat\\realtimechat\\backend\\realtimechat\\realtimechat.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{8713326B-1CAE-4949-A233-9927C0330E61}|RealTimeChat\\RealTimeChat.csproj|solutionrelative:realtimechat\\realtimechat.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserConnection.cs",
+              "DocumentMoniker": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Models\\UserConnection.cs",
+              "RelativeDocumentMoniker": "RealTimeChat\\Models\\UserConnection.cs",
+              "ToolTip": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Models\\UserConnection.cs",
+              "RelativeToolTip": "RealTimeChat\\Models\\UserConnection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-11T21:06:58.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Models\\User.cs",
+              "RelativeDocumentMoniker": "RealTimeChat\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Models\\User.cs",
+              "RelativeToolTip": "RealTimeChat\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-11T21:06:55.714Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Message.cs",
+              "DocumentMoniker": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Models\\Message.cs",
+              "RelativeDocumentMoniker": "RealTimeChat\\Models\\Message.cs",
+              "ToolTip": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Models\\Message.cs",
+              "RelativeToolTip": "RealTimeChat\\Models\\Message.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-09T11:24:02.732Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\appsettings.json",
+              "RelativeDocumentMoniker": "RealTimeChat\\appsettings.json",
+              "ToolTip": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\appsettings.json",
+              "RelativeToolTip": "RealTimeChat\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-09T10:53:41.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Hubs\\ChatHub.cs",
+              "RelativeDocumentMoniker": "RealTimeChat\\Hubs\\ChatHub.cs",
+              "ToolTip": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Hubs\\ChatHub.cs",
+              "RelativeToolTip": "RealTimeChat\\Hubs\\ChatHub.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-09T09:43:22.95Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Program.cs",
+              "RelativeDocumentMoniker": "RealTimeChat\\Program.cs",
+              "ToolTip": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\Program.cs",
+              "RelativeToolTip": "RealTimeChat\\Program.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-09T09:43:07.398Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RealTimeChat.csproj",
+              "DocumentMoniker": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\RealTimeChat.csproj",
+              "RelativeDocumentMoniker": "RealTimeChat\\RealTimeChat.csproj",
+              "ToolTip": "C:\\Users\\\u05D0\u05D5\u05E9\u05E8\\Downloads\\RealTimeChat\\RealTimeChat\\backend\\RealTimeChat\\RealTimeChat.csproj",
+              "RelativeToolTip": "RealTimeChat\\RealTimeChat.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-01-09T09:43:03.48Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
