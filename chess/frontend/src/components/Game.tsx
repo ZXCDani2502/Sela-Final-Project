@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Chessboard } from 'react-chessboard'
 import { Chess, Square } from 'chess.js'
 import { CustomSquareStyles, PromotionPieceOption } from 'react-chessboard/dist/chessboard/types'
 import { useSocketContext } from '../context/SocketContext'
-import { useAuthContext } from '../context/AuthContext'
+import useChessPlayer from '../hooks/game/useChessPlayer'
+import { useLocation } from 'react-router'
 
 const Game = () => {
     const [game, setGame] = useState<Chess>(new Chess())
@@ -12,7 +13,9 @@ const Game = () => {
     const [optionSquares, setOptionSquares] = useState<CustomSquareStyles | undefined>({})
     const [showPromotionDialog, setShowPromotionDialog] = useState(false)
     const { socket } = useSocketContext()
-    const { authUser } = useAuthContext()
+    const location = useLocation()
+    const {color} = location.state
+    const player = useChessPlayer(color)
 
     //OPTIONAL hot toast for invalid moves
 
@@ -25,6 +28,10 @@ const Game = () => {
     //     return gameCopy
     //   })
     // }
+
+    socket?.on('getMove', (gameCopy) => {
+        setGame(gameCopy)
+    })
 
     const safeMove = (from?: Square | null, to?: Square | null, promotion?: string) => {
         const gameCopy: Chess = new Chess(game.fen())
@@ -50,6 +57,9 @@ const Game = () => {
 
         // select first square
         if (!moveFrom) {
+            // can't select other color to move
+            if (game.get(square).color !== player!.color) return
+
             const hasMoveOptions = getMoveOptions(square)
             if (hasMoveOptions) setMoveFrom(square)
             return
@@ -86,10 +96,10 @@ const Game = () => {
                 if (hasMoveOptions) setMoveFrom(square)
                 return
             }
-            const { gameCopy, move } = result
+            const { gameCopy } = result
 
-            socket?.emit('move', { move: move })
-            setGame(gameCopy)
+            socket?.emit('move', gameCopy)
+            // setGame(gameCopy)
             resetStates()
             return
         }
@@ -124,14 +134,17 @@ const Game = () => {
     }
 
     const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
+        //can't drop the enemy pieces
+        if (game.get(sourceSquare).color !== player!.color) return false
+
         setMoveFrom(sourceSquare)
         setMoveTo(targetSquare)
 
         const result = safeMove(sourceSquare, targetSquare)
 
         if (result) {
-            const { gameCopy } = result
-            setGame(gameCopy)
+            socket?.emit('move', result.gameCopy)
+            // setGame(result.gameCopy)
             resetStates()
             return true
         }
@@ -149,7 +162,9 @@ const Game = () => {
             if (!result) return false
 
             console.log(`promoted to ${piece}`)
-            setGame(result.gameCopy)
+
+            socket?.emit('move', result.gameCopy)
+            // setGame(result.gameCopy)
         }
         resetStates()
         return true
@@ -176,7 +191,7 @@ const Game = () => {
                 onPieceDrop={onPieceDrop}
                 showPromotionDialog={showPromotionDialog}
                 promotionToSquare={moveTo}
-                //  onPieceClick={}
+                boardOrientation={player!.color === 'w' ? 'white' : 'black'}
                 onPromotionCheck={onPromotionCheck}
             />
             {/*

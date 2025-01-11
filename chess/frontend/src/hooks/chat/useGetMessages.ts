@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
-import useChat from '../../store/useChat'
+import useChat from '../../store/useChatStore'
 import toast from 'react-hot-toast'
 
 const useGetMessages = () => {
     const [loading, setLoading] = useState(false)
-    const { messages, setMessages, currentChat: selectedChat } = useChat()
+    const { messages, setMessages, currentChat } = useChat()
 
     useEffect(() => {
         const getMessages = async () => {
             setLoading(true)
             try {
-                const res = await fetch(`http://localhost:6600/api/message/${selectedChat?._id}`)
+                const res = await fetch(`http://localhost:6600/api/message/${currentChat?._id}`)
                 const data = await res.json()
                 if (data.error) throw new Error(data.error)
                 setMessages(data)
@@ -21,8 +21,8 @@ const useGetMessages = () => {
             }
         }
 
-        if (selectedChat?._id) getMessages()
-    }, [selectedChat?._id])
+        if (currentChat?._id) getMessages()
+    }, [currentChat?._id])
 
     return { messages, loading }
 }

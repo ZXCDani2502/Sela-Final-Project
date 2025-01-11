@@ -9,21 +9,23 @@ const matchSchema = new mongoose.Schema(
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User',
+                color: 'b' | 'w',
             },
         ],
-        chat: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Chat',
-            },
-        ],
-        game: {
-            type: Chess,
-            default: new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'),
+        chat: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Chat',
         },
+        game: [
+            {
+                type: String,
+                default: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+            },
+        ],
         winner: {
-            type: mongoose.Schema.Types.ObjectId | null | undefined, // null if draw, undefined if game is ongoing
+            type: mongoose.Schema.Types.ObjectId, // null if draw, undefined if game is ongoing
             ref: 'User',
+            default: undefined,
         },
     },
     { timestamps: true }

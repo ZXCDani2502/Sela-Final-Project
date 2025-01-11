@@ -1,14 +1,21 @@
-export const getGame = async (req, res) => {
-    const chat = await Chat.findOne({
-        users: {
-            $all: [senderId, receiverId],
-        },
-    })
+export const startMatch = (socket,matchId) => {
+    if (Math.random() <= 0.5) {
+        socket.emit('matchFound', {color: 'w' , matchId})
+        socket.broadcast.emit('matchFound', {color: 'b', matchId})
+    } else {
+        socket.emit('matchFound', {color: 'b' , matchId})
+        socket.broadcast.emit('matchFound', {color: 'w', matchId})
+    }
+}
 
-    if (!chat) {
-        chat = await Chat.create({
-            users: [senderId, receiverId],
-        })
+export const getGame = async (req, res) => {
+    try {
+        // const { id: receiverId } = req.params
+        // const senderId = req.user._id
+        // res.status(200).json(match.game)
+    } catch (error) {
+        console.log('Error in getGame: ', error.message)
+        res.status(500).json({ error: 'Internal server error' })
     }
 }
 
@@ -18,21 +25,21 @@ export const sendMove = async (req, res) => {
         const { id: receiverId } = req.params
         const senderId = req.user._id
 
-        const newMessage = new Message({ senderId, receiverId, message })
-        if (newMessage) {
-            chat.messages.push(newMessage)
+        const newMove = new Move({ senderId, receiverId, message })
+        if (newMove) {
+            chat.messages.push(newMove)
         }
 
-        await Promise.all([chat.save(), newMessage.save()]) // saves will run in parallel
+        await Promise.all([chat.save(), newMove.save()]) // saves will run in parallel
 
         const receiverSocketId = getReceiverSocketId(receiverId)
         if (receiverSocketId) {
-            io.to(receiverSocketId).emit('newMessage', newMessage)
+            io.to(receiverSocketId).emit('newMessage', newMove)
         }
 
-        res.status(201).json(`Message ${newMessage._id} sent`)
+        res.status(201).json(`Message ${newMove._id} sent`)
     } catch (error) {
-        console.log('Error in sendMessage: ', error.message)
+        console.log('Error in sendMove: ', error.message)
         res.status(500).json({ error: 'Internal server error' })
     }
 }

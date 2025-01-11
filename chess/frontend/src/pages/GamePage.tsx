@@ -1,9 +1,11 @@
-import Game from "../components/Game"
+import ChatContainer from '../components/chat/ChatContainer'
+import Game from '../components/Game'
 
 const GamePage = () => {
     return (
-        <div className='content-center'>
+        <div className='content-center flex flex-row'>
             <Game />
+            <ChatContainer />
         </div>
     )
 }

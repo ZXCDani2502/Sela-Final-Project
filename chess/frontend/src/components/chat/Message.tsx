@@ -1,5 +1,5 @@
 // import useChat from '../../store/useChat'
-import { Message as MessageType } from '../../store/useChat.ts'
+import { Message as MessageType } from '../../store/useChatStore.ts'
 import { extractTime } from '../../utils/extractTime.ts'
 
 const Message = ({ message }: { message: MessageType }) => {

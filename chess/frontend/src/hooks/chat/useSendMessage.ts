@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useChat from '../../store/useChat.ts'
+import useChat from '../../store/useChatStore.ts'
 import toast from 'react-hot-toast'
 
 const useSendMessage = () => {
