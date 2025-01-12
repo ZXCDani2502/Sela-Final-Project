@@ -1,7 +1,11 @@
 import { useDraggable } from '@dnd-kit/core'
-import { Piece, PieceProps } from '../../types'
+import { Piece as PieceType } from '../../types'
 
-const OnePiece = ({ piece, color }: PieceProps) => {
+type PieceProps = {
+    piece: PieceType
+}
+
+const Piece = ({ piece }: PieceProps) => {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: piece.id,
     })
@@ -13,13 +17,13 @@ const OnePiece = ({ piece, color }: PieceProps) => {
 
     return (
         <>
-            {color === 'b' ? (
+            {piece.color === 'b' ? (
                 <div
                     ref={setNodeRef}
                     {...listeners}
                     {...attributes}
-                    className='relative flex items-center justify-center w-24 h-24 bg-gradient-to-t from-black to-gray-700 rounded-full shadow-lg'
-                    style={style}>
+                    style={style}
+                    className='relative flex items-center justify-center w-24 h-24 bg-gradient-to-t from-black to-gray-700 rounded-full shadow-lg'>
                     {/* Outer Ring */}
                     <div className='absolute inset-2 bg-gradient-to-t from-gray-900 to-gray-800 rounded-full'></div>
                     {/* Middle Ring */}
@@ -30,7 +34,12 @@ const OnePiece = ({ piece, color }: PieceProps) => {
                     <div className='relative w-8 h-8 bg-gradient-to-t from-black to-gray-700 rounded-full'></div>
                 </div>
             ) : (
-                <div className='relative flex items-center justify-center w-24 h-24 bg-gradient-to-t from-gray-300 to-white rounded-full shadow-lg'>
+                <div
+                    ref={setNodeRef}
+                    {...listeners}
+                    {...attributes}
+                    style={style}
+                    className='relative flex items-center justify-center w-24 h-24 bg-gradient-to-t from-gray-300 to-white rounded-full shadow-lg'>
                     {/* Outer Ring */}
                     <div className='absolute inset-2 bg-gradient-to-t from-gray-200 to-gray-100 rounded-full'></div>
                     {/* Middle Ring */}
@@ -45,4 +54,4 @@ const OnePiece = ({ piece, color }: PieceProps) => {
     )
 }
 
-export default OnePiece
+export default Piece

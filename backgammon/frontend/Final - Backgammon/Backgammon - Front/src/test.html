@@ -1,35 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backgammon Piece</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="flex items-center justify-center min-h-screen bg-gray-400">
-    <!-- Black Backgammon Piece -->
-    <div class="relative flex items-center justify-center w-24 h-24 bg-gradient-to-t from-black to-gray-700 rounded-full shadow-lg">
-        <!-- Outer Ring -->
-        <div class="absolute inset-2 bg-gradient-to-t from-gray-900 to-gray-800 rounded-full"></div>
-        <!-- Middle Ring -->
-        <div class="absolute inset-4 bg-gradient-to-t from-gray-850 to-gray-700 rounded-full"></div>
-        <!-- Inner Ring -->
-        <div class="absolute inset-5 bg-gradient-to-t from-gray-900 to-gray-800 rounded-full"></div>
-        <!-- Center Circle -->
-        <div class="relative w-8 h-8 bg-gradient-to-t from-black to-gray-700 rounded-full"></div>
-    </div>
-
-        <!-- White Backgammon Piece -->
-    <div class="relative flex items-center justify-center w-24 h-24 bg-gradient-to-t from-gray-300 to-white rounded-full shadow-lg">
-        <!-- Outer Ring -->
-        <div class="absolute inset-2 bg-gradient-to-t from-gray-200 to-gray-100 rounded-full"></div>
-        <!-- Middle Ring -->
-        <div class="absolute inset-4 bg-gradient-to-t from-gray-150 to-white rounded-full"></div>
-        <!-- Inner Ring -->
-        <div class="absolute inset-5 bg-gradient-to-t from-gray-200 to-gray-100 rounded-full"></div>
-        <!-- Center Circle -->
-        <div class="relative w-8 h-8 bg-gradient-to-t from-gray-300 to-white rounded-full"></div>
-    </div>
-
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Backgammon Board</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="flex justify-center items-center min-h-screen bg-gray-200">
+        <div class="bg-green-600 w-[600px] h-[300px] rounded-lg overflow-hidden border-4 border-gray-800 grid grid-cols-12">
+            <!-- Top Points -->
+            <div class="col-span-6 flex flex-row-reverse">
+                <!-- Create 6 triangles -->
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
+                </div>
+            </div>
+            <div class="col-span-6 flex">
+                <!-- Create 6 triangles -->
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
+                </div>
+            </div>
+            <!-- Bottom Points -->
+            <div class="col-span-6 flex flex-row-reverse">
+                <!-- Create 6 triangles -->
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
+                </div>
+            </div>
+            <div class="col-span-6 flex">
+                <!-- Create 6 triangles -->
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
+                </div>
+                <div class="w-[16.66%] h-full relative">
+                    <div
+                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

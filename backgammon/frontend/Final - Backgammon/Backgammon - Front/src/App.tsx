@@ -3,49 +3,164 @@ import type { Piece, Column as ColumnType } from './types'
 import { Column } from './Column'
 import { DndContext, DragEndEvent } from '@dnd-kit/core'
 
-const COLUMNS: ColumnType[] = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    // { id: 4 },
-    // { id: 5 },
-    // { id: 6 },
-    // { id: 7 },
-    // { id: 8 },
-    // { id: 9 },
-    // { id: 10 },
-    // { id: 11 },
-    // { id: 12 },
-    // { id: 13 },
-    // { id: 14 },
-    // { id: 15 },
-    // { id: 16 },
-    // { id: 17 },
-    // { id: 18 },
-    // { id: 19 },
-    // { id: 20 },
-    // { id: 21 },
-    // { id: 22 },
-    // { id: 23 },
-    // { id: 24 },
-]
+const COLUMNS: ColumnType[] = Array.from(
+    { length: 24 },
+    (_, index) =>
+        ({
+            id: 1 + index,
+        } as ColumnType)
+)
 
 const INITIAL_BOARD_POSITION: Piece[] = [
     {
         id: 1,
-        status: 1,
+        position: 1,
+        color: 'w',
     },
     {
         id: 2,
-        status: 1,
+        position: 1,
+        color: 'w',
     },
     {
         id: 3,
-        status: 2,
+        position: 6,
+        color: 'b',
     },
     {
         id: 4,
-        status: 3,
+        position: 6,
+        color: 'b',
+    },
+    {
+        id: 5,
+        position: 6,
+        color: 'b',
+    },
+    {
+        id: 6,
+        position: 6,
+        color: 'b',
+    },
+    {
+        id: 7,
+        position: 6,
+        color: 'b',
+    },
+    {
+        id: 8,
+        position: 8,
+        color: 'b',
+    },
+    {
+        id: 9,
+        position: 8,
+        color: 'b',
+    },
+    {
+        id: 10,
+        position: 8,
+        color: 'b',
+    },
+    {
+        id: 11,
+        position: 12,
+        color: 'w',
+    },
+    {
+        id: 12,
+        position: 12,
+        color: 'w',
+    },
+    {
+        id: 13,
+        position: 12,
+        color: 'w',
+    },
+    {
+        id: 14,
+        position: 12,
+        color: 'w',
+    },
+    {
+        id: 15,
+        position: 12,
+        color: 'w',
+    },
+    {
+        id: 16,
+        position: 13,
+        color: 'b',
+    },
+    {
+        id: 17,
+        position: 13,
+        color: 'b',
+    },
+    {
+        id: 18,
+        position: 13,
+        color: 'b',
+    },
+    {
+        id: 19,
+        position: 13,
+        color: 'b',
+    },
+    {
+        id: 20,
+        position: 13,
+        color: 'b',
+    },
+    {
+        id: 21,
+        position: 17,
+        color: 'w',
+    },
+    {
+        id: 22,
+        position: 17,
+        color: 'w',
+    },
+    {
+        id: 23,
+        position: 17,
+        color: 'w',
+    },
+    {
+        id: 24,
+        position: 19,
+        color: 'w',
+    },
+    {
+        id: 25,
+        position: 19,
+        color: 'w',
+    },
+    {
+        id: 26,
+        position: 19,
+        color: 'w',
+    },
+    {
+        id: 27,
+        position: 19,
+        color: 'w',
+    },
+    {
+        id: 28,
+        position: 19,
+        color: 'w',
+    },
+    {
+        id: 29,
+        position: 24,
+        color: 'b',
+    },
+    {
+        id: 30,
+        position: 24,
+        color: 'b',
     },
 ]
 export default function App() {
@@ -56,10 +171,11 @@ export default function App() {
         if (!over) return
 
         const pieceId = active.id as number
-        const newStatus = over.id as Piece['status']
+        const newPosition = over.id as Piece['position']
         const piece = pieces.find((piece) => piece.id === pieceId)
-        console.log(`Moving From ${piece?.status} to ${newStatus}`)
-        setPieces(() => pieces.map((piece) => (piece.id === pieceId ? { ...piece, status: newStatus } : piece)))
+        console.log(`Moving From ${piece?.position} to ${newPosition}`)
+
+        setPieces(() => pieces.map((piece) => (piece.id === pieceId ? { ...piece, position: newPosition } : piece)))
     }
 
     return (
@@ -67,7 +183,7 @@ export default function App() {
             <div className='flex gap-8'>
                 <DndContext onDragEnd={handleDragEnd}>
                     {COLUMNS.map((column) => {
-                        return <Column key={column.id} column={column} pieces={pieces.filter((piece) => piece.status === column.id)} />
+                        return <Column key={column.id} column={column} pieces={pieces.filter((piece) => piece.position === column.id)} />
                     })}
                 </DndContext>
             </div>
