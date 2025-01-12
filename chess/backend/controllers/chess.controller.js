@@ -1,10 +1,10 @@
-export const startMatch = (socket,matchId) => {
+export const startMatch = (socket, matchId) => {
     if (Math.random() <= 0.5) {
-        socket.emit('matchFound', {color: 'w' , matchId})
-        socket.broadcast.emit('matchFound', {color: 'b', matchId})
+        socket.emit('matchFound', { color: 'w', matchId })
+        socket.broadcast.emit('matchFound', { color: 'b', matchId })
     } else {
-        socket.emit('matchFound', {color: 'b' , matchId})
-        socket.broadcast.emit('matchFound', {color: 'w', matchId})
+        socket.emit('matchFound', { color: 'b', matchId })
+        socket.broadcast.emit('matchFound', { color: 'w', matchId })
     }
 }
 

@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Chessboard } from 'react-chessboard'
 import { Chess, Square } from 'chess.js'
 import { CustomSquareStyles, PromotionPieceOption } from 'react-chessboard/dist/chessboard/types'
 import { useSocketContext } from '../context/SocketContext'
 import useChessPlayer from '../hooks/game/useChessPlayer'
 import { useLocation } from 'react-router'
-
 const Game = () => {
     const [game, setGame] = useState<Chess>(new Chess())
     const [moveFrom, setMoveFrom] = useState<Square | null>(null)
@@ -14,7 +13,7 @@ const Game = () => {
     const [showPromotionDialog, setShowPromotionDialog] = useState(false)
     const { socket } = useSocketContext()
     const location = useLocation()
-    const {color} = location.state
+    const { color } = location.state
     const player = useChessPlayer(color)
 
     //OPTIONAL hot toast for invalid moves
@@ -29,19 +28,12 @@ const Game = () => {
     //   })
     // }
 
-    socket?.on('getMove', (gameCopy) => {
-        setGame(gameCopy)
-    })
-
     const safeMove = (from?: Square | null, to?: Square | null, promotion?: string) => {
         const gameCopy: Chess = new Chess(game.fen())
 
         if (!from || !to) return null
         const move = gameCopy.move({ from, to, promotion })
-
         if (!move) return null
-
-        console.log(move.san)
         return { gameCopy: gameCopy, move: move }
     }
 
@@ -98,13 +90,32 @@ const Game = () => {
             }
             const { gameCopy } = result
 
-            socket?.emit('move', gameCopy)
-            // setGame(gameCopy)
+            socket?.emit('move', gameCopy.fen())
+            setGame(gameCopy)
             resetStates()
             return
         }
     }
+    useEffect(() => {
+        if (!socket) return;
 
+        const handleMoveSet = (fen: string) => {
+            try {
+                const gameCopy = new Chess(game.fen());
+                gameCopy.load(fen);
+                setGame(gameCopy);
+            } catch (e) {
+                console.log(e);
+            }
+            resetStates();
+        };
+
+        socket.on('moveSet', handleMoveSet);
+
+        return () => {
+            socket.off('moveSet', handleMoveSet);
+        };
+    }, [socket, game]);
     const getMoveOptions = (square: Square) => {
         const moves = game.moves({ square, verbose: true })
 
@@ -143,8 +154,8 @@ const Game = () => {
         const result = safeMove(sourceSquare, targetSquare)
 
         if (result) {
-            socket?.emit('move', result.gameCopy)
-            // setGame(result.gameCopy)
+            socket?.emit('move', result.gameCopy.fen())
+            setGame(result.gameCopy)
             resetStates()
             return true
         }
@@ -163,8 +174,8 @@ const Game = () => {
 
             console.log(`promoted to ${piece}`)
 
-            socket?.emit('move', result.gameCopy)
-            // setGame(result.gameCopy)
+            socket!.emit('move', result.gameCopy.fen())
+            setGame(result.gameCopy)
         }
         resetStates()
         return true
