@@ -13,7 +13,7 @@ const Game = () => {
     const [showPromotionDialog, setShowPromotionDialog] = useState(false)
     const { socket } = useSocketContext()
     const location = useLocation()
-    const { color } = location.state
+    const { color, matchId } = location.state
     const player = useChessPlayer(color)
 
     //OPTIONAL hot toast for invalid moves
@@ -90,32 +90,31 @@ const Game = () => {
             }
             const { gameCopy } = result
 
-            socket?.emit('move', gameCopy.fen())
+            socket?.emit('move', { game: gameCopy.fen(), matchId })
             setGame(gameCopy)
             resetStates()
             return
         }
     }
     useEffect(() => {
-        if (!socket) return;
+        console.log('worked')
+        if (!socket) return
 
         const handleMoveSet = (fen: string) => {
+            console.log("I'm here")
             try {
-                const gameCopy = new Chess(game.fen());
-                gameCopy.load(fen);
-                setGame(gameCopy);
+                const gameCopy = new Chess(fen)
+                setGame(gameCopy)
             } catch (e) {
-                console.log(e);
+                console.log(e)
             }
-            resetStates();
-        };
-
-        socket.on('moveSet', handleMoveSet);
-
+            resetStates()
+        }
+        socket.on('updateBoard', handleMoveSet)
         return () => {
-            socket.off('moveSet', handleMoveSet);
-        };
-    }, [socket, game]);
+            socket.off('updateBoard', handleMoveSet)
+        }
+    }, [socket, game])
     const getMoveOptions = (square: Square) => {
         const moves = game.moves({ square, verbose: true })
 
@@ -154,7 +153,7 @@ const Game = () => {
         const result = safeMove(sourceSquare, targetSquare)
 
         if (result) {
-            socket?.emit('move', result.gameCopy.fen())
+            socket?.emit('move', { game: result.gameCopy.fen(), matchId })
             setGame(result.gameCopy)
             resetStates()
             return true
@@ -174,7 +173,7 @@ const Game = () => {
 
             console.log(`promoted to ${piece}`)
 
-            socket!.emit('move', result.gameCopy.fen())
+            socket!.emit('move', { game: result.gameCopy.fen(), matchId })
             setGame(result.gameCopy)
         }
         resetStates()
@@ -194,6 +193,7 @@ const Game = () => {
         <div className=''>
             <Chessboard
                 boardWidth={600}
+                customBoardStyle={{ borderRadius: '4px' }}
                 position={game.fen()}
                 animationDuration={200}
                 customSquareStyles={{ ...optionSquares }}

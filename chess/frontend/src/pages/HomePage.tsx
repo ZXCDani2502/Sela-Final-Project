@@ -20,8 +20,7 @@ const HomePage = () => {
         
         socket.emit('queue', authUser?._id)
         socket.on('matchFound', ({matchId,color}) => {
-            console.log(matchId)
-            navigate('/game',{state:{color}})
+            navigate('/game',{state:{color,matchId}})
         })
     }
 

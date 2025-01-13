@@ -3,7 +3,7 @@ import http from 'http'
 import { Server } from 'socket.io'
 import Match from '../models/chess.model.js'
 import { startMatch } from '../controllers/chess.controller.js'
-
+import { match } from 'assert'
 const app = express()
 const server = http.createServer(app)
 const io = new Server(server, {
@@ -18,13 +18,27 @@ export const getReceiverSocketId = (receiverId) => {
 }
 
 const userSocketMap = {}
-
 const matchmakingQueue = []
 let matchId = 0
 io.on('connection', (socket) => {
-    console.log('a user connected', socket.id)
-
     const { userId } = socket.handshake.query
+    console.log('a user connected', socket.id)
+    const currentMatches = Match.find().where("users",userId)
+    console.log(currentMatches);
+    // console.log('match - ', availableMatch)
+    // if (currentMatch) {
+    //     socket.join(currentMatch._id)
+    //         const LastGameState = currentMatch.game
+    //         setTimeout(() => {}, 1000)
+    //         try {
+    //             console.log(LastGameState)
+    //             console.log('lastGameState - ', lastMove)
+    //             socket.emit('updateBoard', lastMove)
+    //         } catch (e) {
+    //             console.log(e)
+    //         }
+    //     }
+    
     if (userId != 'undefined') {
         userSocketMap[userId] = socket.id
     }
@@ -40,7 +54,6 @@ io.on('connection', (socket) => {
             console.log(matchmakingQueue)
             const opponentId = matchmakingQueue.pop()
             console.log('opponent', opponentId)
-
             const match = new Match({ users: [userId, opponentId] })
             match.save()
             matchId = match._id
@@ -56,9 +69,13 @@ io.on('connection', (socket) => {
             // console.log(socket.rooms)
         }
     }),
-        socket.on('move', (data) => {
-            console.log(matchId)
-            socket.to(matchId).emit('moveSet', data)
+        socket.on('move', ({ game, matchId }) => {
+            Match.findById(matchId).then((match) => {
+                match.game.push(game)
+                match.save()
+                console.log(match)
+                socket.broadcast.emit('updateBoard', game)
+            })
         }),
         socket.on('disconnect', () => {
             console.log('user disconnected', socket.id)
@@ -66,6 +83,9 @@ io.on('connection', (socket) => {
             delete matchmakingQueue[userId]
             io.emit('getOnlineUsers', Object.keys(userSocketMap))
         })
+    socket.on('gameOver', (matchId) => {
+        delete currentMatches[matchId]
+    })
 })
 
 export { app, io, server }

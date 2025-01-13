@@ -1,23 +1,21 @@
 import { useState } from 'react'
 import useChat from '../../store/useChatStore.ts'
 import toast from 'react-hot-toast'
+import axios from 'axios'
 
 const useSendMessage = () => {
     const [loading, setLoading] = useState(false)
-    const { messages, setMessages, currentChat: selectedChat } = useChat()
+    const { messages, setMessages, currentChat: selectedChat} = useChat()
     //TODO get selected chat
-
     const sendMessage = async (message: string) => {
         setLoading(true)
         try {
-            const res = await fetch(`http://localhost:6600/api/message/send/${selectedChat?._id}`, {
-                method: 'POST',
+            const {data} = await axios.post(`http://localhost:6600/api/message/send/${selectedChat?._id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ message }),
             })
-            const data = await res.json()
             if (data.error) throw new Error(data.error)
 
             setMessages([...messages, data.message])
