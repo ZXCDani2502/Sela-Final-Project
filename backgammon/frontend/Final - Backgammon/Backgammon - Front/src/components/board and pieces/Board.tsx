@@ -1,4 +1,12 @@
-const Board = () => {
+import { Column } from '../../Column'
+import { Column as ColumnType, Piece as PieceType, Position } from '../../types'
+
+type BoardProps = {
+    columns: ColumnType[]
+    pieces: PieceType[]
+}
+
+const Board = ({ columns, pieces }: BoardProps) => {
     return (
         <body className='flex justify-center items-center min-h-screen bg-gray-800'>
             <div className='bg-wood-light dark:bg-wood-dark bg-contain w-[800px] h-[400px] rounded-sm overflow-hidden border-4 border-gray-900 flex'>
@@ -7,20 +15,16 @@ const Board = () => {
                     {/* Top Quadrant */}
                     <div className='flex h-1/2 flex-row'>
                         {/* 6 Points */}
-                        {[...Array(6)].map((_, i) =>(
-                        <div key={i} className='w-1/6 h-full relative'>
-                            <div className={`absolute top-0 w-0 h-0 border-l-[25px] border-l-transparent border-r-[25px] border-r-transparent border-t-[200px]
-                                ${i % 2 === 1 ? 'border-t-amber-700' : 'border-t-amber-300'} opacity-25`}></div>
-                        </div>))}
+                        {[...Array(6)].map((_, i) => (
+                            <Column key={i + 1} column={columns[i + 1]} pieces={pieces.filter((piece) => piece.position === i + 1)} />
+                        ))}
                     </div>
                     {/* Bottom Quadrant */}
                     <div className='flex h-1/2'>
                         {/* 6 Points */}
-                        {[...Array(6)].map((_, i) =>(
-                        <div key={i} className='w-1/6 h-full relative'>
-                            <div className={`absolute bottom-0 w-0 h-0 border-l-[25px] border-l-transparent border-r-[25px] border-r-transparent border-b-[200px]
-                                ${i % 2 === 0 ? 'border-b-amber-700' : 'border-b-amber-300'} opacity-25`}></div>
-                        </div>))}
+                        {[...Array(6)].map((_, i) => (
+                            <Column key={i + 7} column={columns[i + 7]} pieces={pieces.filter((piece) => piece.position === i + 7)} />
+                        ))}
                     </div>
                 </div>
                 {/* Central Bar */}
@@ -30,20 +34,16 @@ const Board = () => {
                     {/* Top Quadrant */}
                     <div className='flex h-1/2'>
                         {/* 6 Points */}
-                        {[...Array(6)].map((_, i) =>(
-                        <div key={i} className='w-1/6 h-full relative'>
-                            <div className={`absolute top-0 w-0 h-0 border-l-[25px] border-l-transparent border-r-[25px] border-r-transparent border-t-[200px]
-                                ${i % 2 === 1 ? 'border-t-amber-700' : 'border-t-amber-300'} opacity-25`}></div>
-                        </div>))}
+                        {[...Array(6)].map((_, i) => (
+                            <Column key={i + 13} column={columns[i + 13]} pieces={pieces.filter((piece) => piece.position === i + 13)} />
+                        ))}
                     </div>
                     {/* Bottom Points */}
                     <div className='flex h-1/2 flex-row-reverse'>
                         {/* 6 Points */}
-                        {[...Array(6)].map((_, i) =>(
-                        <div key={i} className='w-1/6 h-full relative'>
-                            <div className={`absolute bottom-0 w-0 h-0 border-l-[25px] border-l-transparent border-r-[25px] border-r-transparent border-b-[200px]
-                                ${i % 2 === 1 ? 'border-b-amber-700' : 'border-b-amber-300'} opacity-25`}></div>
-                        </div>))}
+                        {[...Array(6)].map((_, i) => (
+                            <Column key={i + 19} column={columns[i + 19]} pieces={pieces.filter((piece) => piece.position === i + 19)} />
+                        ))}
                     </div>
                 </div>
             </div>

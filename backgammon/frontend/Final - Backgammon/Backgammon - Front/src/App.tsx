@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import type { Piece, Column as ColumnType } from './types'
-import { Column } from './Column'
 import { DndContext, DragEndEvent } from '@dnd-kit/core'
+import Board from './components/board and pieces/Board'
 
-const COLUMNS: ColumnType[] = [...Array(12)].map((_, i) => ({id: 1 + i,} as ColumnType))
+const COLUMNS: ColumnType[] = [...Array(24)].map((_, i) => ({ id: 1 + i } as ColumnType))
 
 const INITIAL_BOARD_POSITION: Piece[] = [
     {
@@ -176,9 +176,7 @@ export default function App() {
         <div className='p-4'>
             <div className='flex gap-8'>
                 <DndContext onDragEnd={handleDragEnd}>
-                    {COLUMNS.map((column) => {
-                        return <Column key={column.id} column={column} pieces={pieces.filter((piece) => piece.position === column.id)} />
-                    })}
+                    <Board columns={COLUMNS} pieces={pieces} />
                 </DndContext>
             </div>
         </div>
