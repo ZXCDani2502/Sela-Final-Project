@@ -23,15 +23,15 @@ const Piece = ({ piece }: PieceProps) => {
                     {...listeners}
                     {...attributes}
                     style={style}
-                    className='relative flex items-center justify-center w-24 h-24 bg-gradient-to-t from-black to-gray-700 rounded-full shadow-lg'>
+                    className='relative flex items-center justify-center w-12 h-12 bg-gradient-to-t from-black to-gray-700 rounded-full shadow-lg'>
                     {/* Outer Ring */}
-                    <div className='absolute inset-2 bg-gradient-to-t from-gray-900 to-gray-800 rounded-full'></div>
+                    <div className='absolute inset-1 bg-gradient-to-t from-gray-900 to-gray-800 rounded-full'></div>
                     {/* Middle Ring */}
-                    <div className='absolute inset-4 bg-gradient-to-t from-gray-850 to-gray-700 rounded-full'></div>
+                    <div className='absolute inset-2 bg-gradient-to-t from-gray-850 to-gray-700 rounded-full'></div>
                     {/* Inner Ring */}
-                    <div className='absolute inset-5 bg-gradient-to-t from-gray-900 to-gray-800 rounded-full'></div>
+                    <div className='absolute inset-2.5 bg-gradient-to-t from-gray-900 to-gray-800 rounded-full'></div>
                     {/* Center Circle */}
-                    <div className='relative w-8 h-8 bg-gradient-to-t from-black to-gray-700 rounded-full'></div>
+                    <div className='relative w-4 h-4 bg-gradient-to-t from-black to-gray-700 rounded-full'></div>
                 </div>
             ) : (
                 <div
@@ -39,15 +39,15 @@ const Piece = ({ piece }: PieceProps) => {
                     {...listeners}
                     {...attributes}
                     style={style}
-                    className='relative flex items-center justify-center w-24 h-24 bg-gradient-to-t from-gray-300 to-white rounded-full shadow-lg'>
+                    className='relative flex items-center justify-center w-12 h-12 bg-gradient-to-t from-gray-300 to-white rounded-full shadow-lg'>
                     {/* Outer Ring */}
-                    <div className='absolute inset-2 bg-gradient-to-t from-gray-200 to-gray-100 rounded-full'></div>
+                    <div className='absolute inset-1 bg-gradient-to-t from-gray-200 to-gray-100 rounded-full'></div>
                     {/* Middle Ring */}
-                    <div className='absolute inset-4 bg-gradient-to-t from-gray-150 to-white rounded-full'></div>
+                    <div className='absolute inset-2 bg-gradient-to-t from-gray-150 to-white rounded-full'></div>
                     {/* Inner Ring */}
-                    <div className='absolute inset-5 bg-gradient-to-t from-gray-200 to-gray-100 rounded-full'></div>
+                    <div className='absolute inset-2.5 bg-gradient-to-t from-gray-200 to-gray-100 rounded-full'></div>
                     {/* Center Circle */}
-                    <div className='relative w-8 h-8 bg-gradient-to-t from-gray-300 to-white rounded-full'></div>
+                    <div className='relative w-4 h-4 bg-gradient-to-t from-gray-300 to-white rounded-full'></div>
                 </div>
             )}
         </>

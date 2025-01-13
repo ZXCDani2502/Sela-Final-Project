@@ -10,5 +10,4 @@ export type Piece = {
 
 export type Column = {
     id: Position
-    color: Color
 }

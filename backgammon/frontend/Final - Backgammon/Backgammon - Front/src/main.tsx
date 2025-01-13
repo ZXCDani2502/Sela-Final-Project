@@ -6,6 +6,6 @@ import Board from './components/board and pieces/Board.tsx'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <Board />
+        <App />
     </StrictMode>
 )

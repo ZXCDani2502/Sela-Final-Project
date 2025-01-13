@@ -1,123 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Backgammon Board</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="flex justify-center items-center min-h-screen bg-gray-200">
-        <div class="bg-green-600 w-[600px] h-[300px] rounded-lg overflow-hidden border-4 border-gray-800 grid grid-cols-12">
-            <!-- Top Points -->
-            <div class="col-span-6 flex flex-row-reverse">
-                <!-- Create 6 triangles -->
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
-                </div>
-            </div>
-            <div class="col-span-6 flex">
-                <!-- Create 6 triangles -->
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute bottom-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[100px] border-b-yellow-500"></div>
-                </div>
-            </div>
-            <!-- Bottom Points -->
-            <div class="col-span-6 flex flex-row-reverse">
-                <!-- Create 6 triangles -->
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
-                </div>
-            </div>
-            <div class="col-span-6 flex">
-                <!-- Create 6 triangles -->
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-yellow-500"></div>
-                </div>
-                <div class="w-[16.66%] h-full relative">
-                    <div
-                        class="absolute top-0 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[100px] border-t-red-500"></div>
-                </div>
-            </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backgammon Board</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Add wood texture and triangle styles */
+    .bg-wood {
+      background-image: url('https://images.unsplash.com/photo-1543994815-253b36546c2a'); /* Replace with an actual wood texture URL */
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .triangle {
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="bg-wood w-[800px] h-[400px] border-4 border-gray-800 flex flex-col">
+    <!-- Top Half -->
+    <div class="flex-1 flex relative">
+      <!-- Triangles -->
+      <div class="absolute top-0 left-0 flex w-full h-full">
+        <!-- Alternating light and dark triangles -->
+        <div class="flex w-full h-full">
+          <!-- Generate 12 triangles for the top half -->
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className={`triangle h-full w-[8.33%] ${i % 2 === 0 ? 'bg-amber-200' : 'bg-amber-800'}`}></div>
+          ))}
         </div>
-    </body>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-[4px] bg-gray-900"></div>
+
+    <!-- Bottom Half -->
+    <div class="flex-1 flex relative">
+      <!-- Triangles -->
+      <div class="absolute top-0 left-0 flex w-full h-full">
+        <!-- Alternating light and dark triangles -->
+        <div class="flex w-full h-full">
+          <!-- Generate 12 triangles for the bottom half -->
+          {[...Array(12)].map((_, i) => (
+            <div
+              key={i}
+              className={`triangle h-full w-[8.33%] ${i % 2 !== 0 ? 'bg-amber-200' : 'bg-amber-800'}`}></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>

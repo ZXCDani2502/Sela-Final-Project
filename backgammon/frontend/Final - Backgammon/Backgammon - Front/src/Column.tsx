@@ -12,24 +12,12 @@ export function Column({ column, pieces }: ColumnProps) {
         id: column.id,
     })
     return (
-        <>
-            {column.color === 'b' ? (
-                <div className='flex w-80 flex-col rounded-lg bg-neutral-800 p-4'>
-                    <div ref={setNodeRef} className='flex flex-1 flex-col gap-4'>
-                        {pieces.map((piece) => {
-                            return <Piece key={piece.id} piece={piece} />
-                        })}
-                    </div>
+            <div className='flex w-80 flex-col bg-amber-800 p-4'>
+                <div ref={setNodeRef} className='flex flex-1 flex-col top-0 w-0 h-0 border-l-transparent border-r-[25px] border-r-transparent border-t-[200px]'>
+                    {pieces.map((piece) => {
+                        return <Piece key={piece.id} piece={piece} />
+                    })}
                 </div>
-            ) : (
-                <div className='flex w-80 flex-col rounded-lg bg-neutral-800 p-4'>
-                    <div ref={setNodeRef} className='flex flex-1 flex-col gap-4'>
-                        {pieces.map((piece) => {
-                            return <Piece key={piece.id} piece={piece} />
-                        })}
-                    </div>
-                </div>
-            )}
-        </>
+            </div>
     )
 }

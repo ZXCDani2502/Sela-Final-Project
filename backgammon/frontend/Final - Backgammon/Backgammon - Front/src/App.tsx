@@ -3,13 +3,7 @@ import type { Piece, Column as ColumnType } from './types'
 import { Column } from './Column'
 import { DndContext, DragEndEvent } from '@dnd-kit/core'
 
-const COLUMNS: ColumnType[] = Array.from(
-    { length: 24 },
-    (_, index) =>
-        ({
-            id: 1 + index,
-        } as ColumnType)
-)
+const COLUMNS: ColumnType[] = [...Array(12)].map((_, i) => ({id: 1 + i,} as ColumnType))
 
 const INITIAL_BOARD_POSITION: Piece[] = [
     {
