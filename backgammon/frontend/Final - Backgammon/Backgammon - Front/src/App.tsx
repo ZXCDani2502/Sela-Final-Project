@@ -173,8 +173,8 @@ export default function App() {
     }
 
     return (
-        <div className='p-4'>
-            <div className='flex gap-8'>
+        <div className=''>
+            <div className='flex'>
                 <DndContext onDragEnd={handleDragEnd}>
                     <Board columns={COLUMNS} pieces={pieces} />
                 </DndContext>

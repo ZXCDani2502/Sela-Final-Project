@@ -11,3 +11,5 @@ export type Piece = {
 export type Column = {
     id: Position
 }
+
+export type Quadrant = 'tl' | 'tr' | 'bl' | 'br'

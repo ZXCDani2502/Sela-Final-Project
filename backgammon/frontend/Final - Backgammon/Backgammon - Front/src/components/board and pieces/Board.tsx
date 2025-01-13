@@ -1,5 +1,5 @@
 import { Column } from '../../Column'
-import { Column as ColumnType, Piece as PieceType, Position } from '../../types'
+import { Column as ColumnType, Piece as PieceType } from '../../types'
 
 type BoardProps = {
     columns: ColumnType[]
@@ -8,46 +8,46 @@ type BoardProps = {
 
 const Board = ({ columns, pieces }: BoardProps) => {
     return (
-        <body className='flex justify-center items-center min-h-screen bg-gray-800'>
-            <div className='bg-wood-light dark:bg-wood-dark bg-contain w-[800px] h-[400px] rounded-sm overflow-hidden border-4 border-gray-900 flex'>
+        <div className='flex justify-center items-center min-h-screen bg-gray-800'>
+            <div className='bg-wood-light dark:bg-wood-dark bg-cover  w-[788px] h-[600px] rounded-sm overflow-hidden border-4 border-amber-900 flex'>
                 {/* Left Side */}
-                <div className='flex flex-col w-1/2 '>
+                <div className='flex flex-col w-1/2'>
                     {/* Top Quadrant */}
-                    <div className='flex h-1/2 flex-row'>
+                    <div className='flex flex-row h-1/2 '>
                         {/* 6 Points */}
                         {[...Array(6)].map((_, i) => (
-                            <Column key={i + 1} column={columns[i + 1]} pieces={pieces.filter((piece) => piece.position === i + 1)} />
+                            <Column key={i + 13} column={columns[i + 12]} pieces={pieces.filter((piece) => piece.position === i + 13)} quadrant='tl' />
                         ))}
                     </div>
                     {/* Bottom Quadrant */}
-                    <div className='flex h-1/2'>
+                    <div className='flex flex-row-reverse h-1/2'>
                         {/* 6 Points */}
                         {[...Array(6)].map((_, i) => (
-                            <Column key={i + 7} column={columns[i + 7]} pieces={pieces.filter((piece) => piece.position === i + 7)} />
+                            <Column key={i + 7} column={columns[i + 6]} pieces={pieces.filter((piece) => piece.position === i + 7)} quadrant='bl' />
                         ))}
                     </div>
                 </div>
                 {/* Central Bar */}
-                <div className='w-[10px] bg-amber-800'></div>
+                <div className='w-[20px] bg-amber-900'></div>
                 {/* Right Side */}
                 <div className='flex flex-col w-1/2'>
                     {/* Top Quadrant */}
-                    <div className='flex h-1/2'>
+                    <div className='flex flex-row h-1/2'>
                         {/* 6 Points */}
                         {[...Array(6)].map((_, i) => (
-                            <Column key={i + 13} column={columns[i + 13]} pieces={pieces.filter((piece) => piece.position === i + 13)} />
+                            <Column key={i + 19} column={columns[i + 18]} pieces={pieces.filter((piece) => piece.position === i + 19)} quadrant='tr' />
                         ))}
                     </div>
-                    {/* Bottom Points */}
-                    <div className='flex h-1/2 flex-row-reverse'>
+                    {/* Bottom Quadrant */}
+                    <div className='flex flex-row-reverse h-1/2 '>
                         {/* 6 Points */}
                         {[...Array(6)].map((_, i) => (
-                            <Column key={i + 19} column={columns[i + 19]} pieces={pieces.filter((piece) => piece.position === i + 19)} />
+                            <Column key={i + 1} column={columns[i]} pieces={pieces.filter((piece) => piece.position === i + 1)} quadrant='br' />
                         ))}
                     </div>
                 </div>
             </div>
-        </body>
+        </div>
     )
 }
 
