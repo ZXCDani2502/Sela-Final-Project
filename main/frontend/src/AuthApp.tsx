@@ -1,4 +1,4 @@
-import SignUpPage from './pages/SignUpPage.tsx'
+import SignupPage from './pages/SignUpPage.tsx'
 import LoginPage from './pages/LoginPage.tsx'
 
 import { Routes, Route, Navigate } from 'react-router-dom'
@@ -26,7 +26,7 @@ const App = () => {
         <div>
             <Routes>
                 {/* <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} /> */}
-                <Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to='/' />} />
+                <Route path='/signup' element={!authUser ? <SignupPage /> : <Navigate to='/' />} />
                 <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
             </Routes>
 
