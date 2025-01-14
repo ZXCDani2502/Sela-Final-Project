@@ -1,25 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { BrowserRouter as Router, Route, Routes} from 'react-router'
-import HomePage from './pages/HomePage'
+import { BrowserRouter } from 'react-router'
 import axios from 'axios'
+import App from './App'
 
 axios.defaults.baseURL = 'http://localhost:8080/'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Router>
-      <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/Login' element={<HomePage/>}/>
-        {/* <Route path='/Logout' element={}/>
-        <Route path='/Signup' element={}/>
-        <Route path='/Account' element={}/>
-        <Route path='/Games' element={}/>
-        <Route path='/Games/Chess' element={}/>
-        <Route path='/Games/Backgammon' element={}/> */}
-      </Routes>
-    </Router>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
   </StrictMode>,
 )

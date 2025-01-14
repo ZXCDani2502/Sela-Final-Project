@@ -22,7 +22,7 @@ type AuthStore = {
     login: (data: UserData) => void
 }
 
-export const useAuthStore = create<AuthStore>()((set) => ({
+export const useAuthStore = create<AuthStore>()((set, get) => ({
     authUser: null,
     isSigningUp: false,
     isLoggingIn: false,
@@ -32,6 +32,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
 
     checkAuth: async () => {
         try {
+            if(!get().authUser) return
             const res = await axiosInstance.get('/auth/check')
 
             set({ authUser: res.data })
