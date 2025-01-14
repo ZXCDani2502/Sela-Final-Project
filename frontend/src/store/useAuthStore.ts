@@ -3,6 +3,7 @@ import { axiosInstance } from '../lib/axios.ts'
 import toast from 'react-hot-toast'
 
 export type UserData = {
+    _id: string
     username: string
     email: string
     password: string

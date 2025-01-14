@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import { Chessboard } from 'react-chessboard'
 import { Chess, Square } from 'chess.js'
 import { CustomSquareStyles, PromotionPieceOption } from 'react-chessboard/dist/chessboard/types'
-import { useSocketContext } from '../../../../chess/frontend/src/context/SocketContext'
-import useChessPlayer from '../../../../chess/frontend/src/hooks/game/useChessPlayer'
 import { useLocation } from 'react-router'
+import { useSocketContext } from '../context/SocketContext'
+import useChessPlayer from '../hooks/game/useChessPlayer'
 const Game = () => {
     const [game, setGame] = useState<Chess>(new Chess())
     const [moveFrom, setMoveFrom] = useState<Square | null>(null)
@@ -12,6 +12,7 @@ const Game = () => {
     const [optionSquares, setOptionSquares] = useState<CustomSquareStyles | undefined>({})
     const [showPromotionDialog, setShowPromotionDialog] = useState(false)
     const { socket } = useSocketContext()
+    
     const location = useLocation()
     const { color } = location.state
     const player = useChessPlayer(color)
@@ -50,7 +51,7 @@ const Game = () => {
         // select first square
         if (!moveFrom) {
             // can't select other color to move
-            if (game.get(square).color !== player!.color) return
+            if (game.get(square)?.color !== player!.color) return
 
             const hasMoveOptions = getMoveOptions(square)
             if (hasMoveOptions) setMoveFrom(square)
@@ -129,7 +130,7 @@ const Game = () => {
         moves.map((move) => {
             newSquares[move.to] = {
                 background:
-                    game.get(move.to) && game.get(move.to).color !== game.get(square).color
+                    game.get(move.to) && game.get(move.to)?.color !== game.get(square)?.color
                         ? 'radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)'
                         : 'radial-gradient(circle, rgba(0,0,0,.1) 25%, transparent 25%)',
                 borderRadius: '50%',
@@ -146,7 +147,7 @@ const Game = () => {
 
     const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
         //can't drop the enemy pieces
-        if (game.get(sourceSquare).color !== player!.color) return false
+        if (game.get(sourceSquare)?.color !== player!.color) return false
 
         setMoveFrom(sourceSquare)
         setMoveTo(targetSquare)
