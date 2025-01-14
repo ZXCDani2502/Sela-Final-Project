@@ -167,10 +167,13 @@ export default function App() {
         const pieceId = active.id as number
         const newPosition = over.id as Piece['position']
         const piece = pieces.find((piece) => piece.id === pieceId)
+
         console.log(`Moving From ${piece?.position} to ${newPosition}`)
 
         setPieces(() => pieces.map((piece) => (piece.id === pieceId ? { ...piece, position: newPosition } : piece)))
     }
+
+    //TODO move to a new file
 
     return (
         <div className=''>

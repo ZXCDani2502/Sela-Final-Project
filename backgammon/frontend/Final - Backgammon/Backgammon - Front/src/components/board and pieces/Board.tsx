@@ -8,8 +8,8 @@ type BoardProps = {
 
 const Board = ({ columns, pieces }: BoardProps) => {
     return (
-        <div className='flex justify-center items-center min-h-screen bg-gray-800'>
-            <div className='bg-wood-light dark:bg-wood-dark bg-cover  w-[788px] h-[600px] rounded-sm overflow-hidden border-4 border-amber-900 flex'>
+        <div className='flex justify-center items-center min-h-screen min-w-full bg-gray-800'>
+            <div className='bg-wood-light dark:bg-wood-dark bg-cover  w-[788px] h-[600px] rounded-sm overflow-hidden border-4 border-yellow-800 flex'>
                 {/* Left Side */}
                 <div className='flex flex-col w-1/2'>
                     {/* Top Quadrant */}
@@ -28,7 +28,7 @@ const Board = ({ columns, pieces }: BoardProps) => {
                     </div>
                 </div>
                 {/* Central Bar */}
-                <div className='w-[20px] bg-amber-900'></div>
+                <div className='w-[20px] bg-yellow-800'></div>
                 {/* Right Side */}
                 <div className='flex flex-col w-1/2'>
                     {/* Top Quadrant */}
