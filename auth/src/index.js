@@ -11,10 +11,10 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(
-	cors({
-		origin: ['http://localhost:6001', 'http://localhost:6601'],
-		credentials: true,
-	})
+    cors({
+        origin: ['http://localhost:6001', 'http://localhost:6601'],
+        credentials: true,
+    })
 )
 
 app.use('/api/auth', authRoutes)
