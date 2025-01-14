@@ -12,7 +12,7 @@ const Game = () => {
     const [optionSquares, setOptionSquares] = useState<CustomSquareStyles | undefined>({})
     const [showPromotionDialog, setShowPromotionDialog] = useState(false)
     const { socket } = useSocketContext()
-
+    
     const location = useLocation()
     const { color } = location.state
     const player = useChessPlayer(color)
@@ -98,25 +98,25 @@ const Game = () => {
         }
     }
     useEffect(() => {
-        if (!socket) return
+        if (!socket) return;
 
         const handleMoveSet = (fen: string) => {
             try {
-                const gameCopy = new Chess(game.fen())
-                gameCopy.load(fen)
-                setGame(gameCopy)
+                const gameCopy = new Chess(game.fen());
+                gameCopy.load(fen);
+                setGame(gameCopy);
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
-            resetStates()
-        }
+            resetStates();
+        };
 
-        socket.on('moveSet', handleMoveSet)
+        socket.on('moveSet', handleMoveSet);
 
         return () => {
-            socket.off('moveSet', handleMoveSet)
-        }
-    }, [socket, game])
+            socket.off('moveSet', handleMoveSet);
+        };
+    }, [socket, game]);
     const getMoveOptions = (square: Square) => {
         const moves = game.moves({ square, verbose: true })
 
