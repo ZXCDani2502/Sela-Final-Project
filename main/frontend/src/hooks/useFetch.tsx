@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 const useFetch = (url: string) => {
-  const [isLoding, setIsLoding] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [hasError, setHasError] = useState<any | null>(null)
   const [data, setData] = useState<any>(null)
 
@@ -14,11 +14,11 @@ const useFetch = (url: string) => {
         setHasError(err.message)
     })
     .finally(() => {
-        setIsLoding(false)
+        setIsLoading(false)
     })
   }, [])
   
-  return {isLoding, hasError, data}
+  return {isLoading, hasError, data}
 }
 
 export default useFetch
