@@ -16,7 +16,7 @@ export const App: React.FC = () => {
 
   const joinChat = async (userName: string, chatRoom: string): Promise<void> => {
     const connection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5022/chat")
+      .withUrl("https://localhost:7022/chat")
       .withAutomaticReconnect()
       .build();
 
@@ -26,8 +26,10 @@ export const App: React.FC = () => {
 
     try {
       await connection.start();
-      await connection.invoke("JoinChat", { userName, chatRoom } as ChatUser);
+      if(isEmptyOrSpaces(userName) || isEmptyOrSpaces(chatRoom))
+        throw new Error("Invalid Credentials")
 
+      await connection.invoke("JoinChat", { userName, chatRoom } as ChatUser);
       setConnection(connection);
       setChatRoom(chatRoom);
     } catch (error) {
@@ -38,7 +40,9 @@ export const App: React.FC = () => {
   const sendMessage = async (message: string): Promise<void> => {
     await connection?.invoke("SendMessage", message);
   };
-
+  function isEmptyOrSpaces(str: string){
+    return str === null || str.match(/^ *$/) !== null;
+}
   const closeChat = async (): Promise<void> => {
     await connection?.stop();
     setConnection(null);

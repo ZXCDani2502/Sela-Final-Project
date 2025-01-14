@@ -16,14 +16,14 @@ const Board = ({ columns, pieces }: BoardProps) => {
                     <div className='flex flex-row h-1/2 '>
                         {/* 6 Points */}
                         {[...Array(6)].map((_, i) => (
-                            <Column key={i + 13} column={columns[i + 12]} pieces={pieces.filter((piece) => piece.position === i + 13)} quadrant='tl' />
+                            <Column key={i + 12} column={columns[i + 12]} pieces={pieces.filter((piece) => piece.position === i + 12)} quadrant='tl' />
                         ))}
                     </div>
                     {/* Bottom Quadrant */}
                     <div className='flex flex-row-reverse h-1/2'>
                         {/* 6 Points */}
                         {[...Array(6)].map((_, i) => (
-                            <Column key={i + 7} column={columns[i + 6]} pieces={pieces.filter((piece) => piece.position === i + 7)} quadrant='bl' />
+                            <Column key={i + 6} column={columns[i + 6]} pieces={pieces.filter((piece) => piece.position === i + 6)} quadrant='bl' />
                         ))}
                     </div>
                 </div>
@@ -35,14 +35,14 @@ const Board = ({ columns, pieces }: BoardProps) => {
                     <div className='flex flex-row h-1/2'>
                         {/* 6 Points */}
                         {[...Array(6)].map((_, i) => (
-                            <Column key={i + 19} column={columns[i + 18]} pieces={pieces.filter((piece) => piece.position === i + 19)} quadrant='tr' />
+                            <Column key={i + 18} column={columns[i + 18]} pieces={pieces.filter((piece) => piece.position === i + 18)} quadrant='tr' />
                         ))}
                     </div>
                     {/* Bottom Quadrant */}
                     <div className='flex flex-row-reverse h-1/2 '>
                         {/* 6 Points */}
                         {[...Array(6)].map((_, i) => (
-                            <Column key={i + 1} column={columns[i]} pieces={pieces.filter((piece) => piece.position === i + 1)} quadrant='br' />
+                            <Column key={i} column={columns[i]} pieces={pieces.filter((piece) => piece.position === i)} quadrant='br' />
                         ))}
                     </div>
                 </div>
