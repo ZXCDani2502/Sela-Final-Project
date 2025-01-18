@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router'
 import { SocketContextProvider } from './context/SocketContext'
 import App from './App'
 import './index.css'
+import { ChakraProvider } from '@chakra-ui/react'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
             <SocketContextProvider>
-                <App />
+                <ChakraProvider>
+                    <App />
+                </ChakraProvider>
             </SocketContextProvider>
         </BrowserRouter>
     </StrictMode>

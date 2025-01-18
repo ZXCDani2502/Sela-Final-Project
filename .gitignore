@@ -13,7 +13,6 @@ dist
 dist-ssr
 *.local
 .env
-utils/generateToken.js
 
 # Editor directories and files
 .vscode/*

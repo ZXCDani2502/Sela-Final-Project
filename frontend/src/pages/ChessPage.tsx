@@ -1,6 +1,5 @@
-import ChatContainer from "../components/chat/ChatContainer"
-import Chess from "../components/Chess"
-
+import ChatContainer from '../components/chessChat/ChatContainer'
+import Chess from '../components/Chess'
 
 const ChessPage = () => {
     return (
