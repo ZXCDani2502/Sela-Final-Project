@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { useSocketContext } from '../../context/SocketContext'
-import useChat from '../../store/useChatStore'
+import { useSocketContext } from '../../context/SocketContext.tsx'
+import useChat from '../../store/useChatStore.ts'
 
 const useListenMessages = () => {
     const { socket } = useSocketContext()

@@ -6,11 +6,11 @@ import App from './App'
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <SocketContextProvider>
-        <App/>
-      </SocketContextProvider>
-    </BrowserRouter>
-  </StrictMode>,
+    <StrictMode>
+        <BrowserRouter>
+            <SocketContextProvider>
+                <App />
+            </SocketContextProvider>
+        </BrowserRouter>
+    </StrictMode>
 )
