@@ -1,8 +1,8 @@
-import ChatContainer from '../components/chessChat/ChatContainer'
 import Chess from '../components/chess/Chess'
 import PlayerBanner from '../components/chess/PlayerBanner'
 import useChessPlayer from '../hooks/chess/useChessPlayer'
 import { useLocation } from 'react-router'
+import Chat from '../components/chessChat/Chat'
 
 const ChessPage = () => {
     const location = useLocation()
@@ -16,7 +16,7 @@ const ChessPage = () => {
                 <Chess />
                 <PlayerBanner user={player} turn='w' />
             </div>
-            <ChatContainer />
+            <Chat />
         </div>
     )
 }
