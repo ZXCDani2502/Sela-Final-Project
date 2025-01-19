@@ -5,7 +5,6 @@ import toast from 'react-hot-toast'
 
 const useSendMove = () => {
     const [loading, setLoading] = useState(false)
-    const [move, setMove] = useState<Move | null>(null)
 
     const sendMove = async (move: Move) => {
         setLoading(true)
@@ -14,8 +13,6 @@ const useSendMove = () => {
             const data = await res.data()
             console.log(data)
             if (data.error) throw new Error(data.error)
-
-            setMove(data.move)
         } catch (error: any) {
             toast.error(error.message)
         } finally {

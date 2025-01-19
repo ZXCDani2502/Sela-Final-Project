@@ -3,8 +3,8 @@ import { Chessboard } from 'react-chessboard'
 import { Chess, Square } from 'chess.js'
 import { CustomSquareStyles, PromotionPieceOption } from 'react-chessboard/dist/chessboard/types'
 import { useLocation } from 'react-router'
-import { useSocketContext } from '../context/SocketContext.tsx'
-import useChessPlayer from '../hooks/game/useChessPlayer.ts'
+import { useSocketContext } from '../../context/SocketContext.tsx'
+import useChessPlayer from '../../hooks/chess/useChessPlayer.ts'
 const Game = () => {
     const [game, setGame] = useState<Chess>(new Chess())
     const [moveFrom, setMoveFrom] = useState<Square | null>(null)
@@ -14,7 +14,7 @@ const Game = () => {
     const { socket } = useSocketContext()
 
     const location = useLocation()
-    const { color } = location.state
+    const color = location.state
     const player = useChessPlayer(color)
 
     //OPTIONAL hot toast for invalid moves

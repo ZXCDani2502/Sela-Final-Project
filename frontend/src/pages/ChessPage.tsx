@@ -1,11 +1,24 @@
 import ChatContainer from '../components/chessChat/ChatContainer'
-import Chess from '../components/Chess'
+import Chess from '../components/chess/Chess'
+import PlayerBanner from '../components/chess/PlayerBanner'
+import useChessPlayer from '../hooks/chess/useChessPlayer'
+import { useLocation } from 'react-router'
 
 const ChessPage = () => {
+    const location = useLocation()
+    const color = location.state
+    const player = useChessPlayer(color)
+
     return (
-        <div className='content-center flex flex-row'>
-            <Chess />
-            <ChatContainer />
+        <div className='flex flex-row w-screen h-screen items-center justify-center '>
+            <div>
+                <PlayerBanner user={player} turn='w' />
+                <Chess />
+                <PlayerBanner user={player} turn='w' />
+            </div>
+            <div className=''>
+                <ChatContainer />
+            </div>
         </div>
     )
 }
