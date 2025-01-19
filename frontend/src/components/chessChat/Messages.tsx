@@ -15,7 +15,7 @@ const Messages = () => {
     }, [messages])
 
     return (
-        <div className='px-4 flex-1 overflow-auto'>
+        <div className='px-4 flex-1 h-10 overflow-auto'>
             {!loading &&
                 messages.length > 0 &&
                 messages.map((message) => (
@@ -23,8 +23,6 @@ const Messages = () => {
                         <Message message={message} />
                     </div>
                 ))}
-
-            {!loading && messages.length === 0 && <p className='text-center'>Send a message</p>}
         </div>
     )
 }

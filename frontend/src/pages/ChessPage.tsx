@@ -16,9 +16,7 @@ const ChessPage = () => {
                 <Chess />
                 <PlayerBanner user={player} turn='w' />
             </div>
-            <div className=''>
-                <ChatContainer />
-            </div>
+            <ChatContainer />
         </div>
     )
 }

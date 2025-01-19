@@ -14,7 +14,7 @@ const Game = () => {
     const { socket } = useSocketContext()
 
     const location = useLocation()
-    const color = location.state
+    const { color } = location.state
     const player = useChessPlayer(color)
 
     //OPTIONAL hot toast for invalid moves
